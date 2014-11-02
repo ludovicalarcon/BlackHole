@@ -115,15 +115,18 @@ class											CActor :
 	virtual const char							*GetEntityClassName() const;
 	virtual IAnimatedCharacter					*GetAnimatedCharacter();
 	virtual const IAnimatedCharacter			*GetAnimatedCharacter() const;
-	uint16										GetChannelId() const
-	{
-		return GetGameObject()->GetChannelId();
-	}
+	uint16										GetChannelId() const;
 	virtual IVehicle							*GetLinkedVehicle() const;
-	virtual int									GetPhysicalSkipEntities(IPhysicalEntity** pSkipList, const int maxSkipSize) const { return 0; }
+	virtual int									GetPhysicalSkipEntities(IPhysicalEntity** pSkipList, const int maxSkipSize) const;
 
 	virtual void								SetHealth(float health);
 	virtual void								SetMaxHealth(float maxHealth);
+	virtual void								SetArmor(int armor);
+	virtual void								SetMaxArmor(int maxArmor);
+	virtual void								SetAtt(int att);
+	virtual void								SetMaxAtt(int maxAtt);
+	virtual void								SetSpeed(float speed);
+	virtual void								SetMaxSpeed(float maxSpeed);
 	virtual void								SetFacialAlertnessLevel(int alertness);
 	virtual void								SetIKPos(const char *pLimbName, const Vec3& goalPos, int priority);
 	virtual void								SetViewInVehicle(Quat viewRotation);
@@ -131,10 +134,6 @@ class											CActor :
 	virtual void								SetStillWaitingOnServerUseResponse(bool waiting);
 	virtual void								SetFlyMode(uint8 flyMode);
 	virtual void								SetMigrating(bool isMigrating);
-	void										SetChannelId(uint16 id)
-	{
-		GetGameObject()->SetChannelId(id);
-	}
 	virtual void								SetCustomHead(const char* customHead);
 
 protected:

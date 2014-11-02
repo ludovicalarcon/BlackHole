@@ -174,7 +174,7 @@ void						CActor::OnReused(IEntity *pEntity, SEntitySpawnParams &params) {}
 
 float						CActor::GetHealth() const { return (_health); }
 
-int							CActor::GetHealthAsRoundedPercentage() const { return ((_maxHealth * _health) / 100); }
+int							CActor::GetHealthAsRoundedPercentage() const { return (((int)_maxHealth * (int)_health) / 100); }
 
 float						CActor::GetMaxHealth() const { return (_maxHealth); }
 
@@ -220,7 +220,7 @@ uint8						CActor::GetSpectatorMode() const { return (0); }
 
 bool						CActor::IsThirdPerson() const { return (true); }
 
-bool						CActor::IsStillWaitingOnServerUseResponse() const { return false; }
+bool						CActor::IsStillWaitingOnServerUseResponse() const { return (false); }
 
 uint8						CActor::GetFlyMode() const { return 0; }
 
@@ -234,8 +234,49 @@ const char					*CActor::GetActorClassName() const { return ("Actor"); }
 
 ActorClass					CActor::GetActorClass() const { return (NULL); }
 
+const char					*CActor::GetEntityClassName() const { return (GetEntity()->GetClass()->GetName()); }
 
+IAnimatedCharacter			*CActor::GetAnimatedCharacter() { return (NULL); }
 
+const IAnimatedCharacter	*CActor::GetAnimatedCharacter() const { return (NULL); }
+
+uint16						CActor::GetChannelId() const { return (GetGameObject()->GetChannelId()); }
+
+IVehicle					*CActor::GetLinkedVehicle() const { return (NULL); }
+
+int							CActor::GetPhysicalSkipEntities(IPhysicalEntity** pSkipList, const int maxSkipSize) const { return (0); }
+
+void						CActor::SetHealth(float health) { _health = health; }
+
+void						CActor::SetMaxHealth(float maxHealth) { _maxHealth = maxHealth; }
+
+void						CActor::SetArmor(int armor) { _armor = armor; }
+
+void						CActor::SetMaxArmor(int maxArmor) { _maxArmor = maxArmor; }
+
+void						CActor::SetAtt(int att) { _att = att; }
+
+void						CActor::SetMaxAtt(int maxAtt) { _maxAtt = maxAtt; }
+
+void						CActor::SetSpeed(float speed) { _speed = speed; }
+
+void						CActor::SetMaxSpeed(float maxSpeed) { _maxSpeed = maxSpeed; }
+
+void						CActor::SetFacialAlertnessLevel(int alertness) {}
+
+void						CActor::SetIKPos(const char *pLimbName, const Vec3& goalPos, int priority) {}
+
+void						CActor::SetViewInVehicle(Quat viewRotation) {}
+
+void						CActor::SetViewRotation(const Quat &rotation) {}
+
+void						CActor::SetStillWaitingOnServerUseResponse(bool waiting) {}
+
+void						CActor::SetFlyMode(uint8 flyMode) {}
+
+void						CActor::SetMigrating(bool isMigrating) {}
+
+void						CActor::SetCustomHead(const char* customHead) {}
 
 
 
