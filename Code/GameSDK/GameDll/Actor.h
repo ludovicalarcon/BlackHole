@@ -18,12 +18,12 @@ class											CActor :
 	virtual										~CActor();
 
 	// IGameObjectExtension
-	virtual bool								Init(IGameObject * pGameObject);
-	virtual void								PostInit(IGameObject * pGameObject);
+	virtual bool								Init(IGameObject *pGameObject);
+	virtual void								PostInit(IGameObject *pGameObject);
 	virtual void								InitClient(int channelId);
 	virtual void								PostInitClient(int channelId);
-	virtual bool								ReloadExtension(IGameObject * pGameObject, const SEntitySpawnParams &params);
-	virtual void								PostReloadExtension(IGameObject * pGameObject, const SEntitySpawnParams &params);
+	virtual bool								ReloadExtension(IGameObject *pGameObject, const SEntitySpawnParams &params);
+	virtual void								PostReloadExtension(IGameObject *pGameObject, const SEntitySpawnParams &params);
 	virtual void								Release();
 	virtual void								FullSerialize(TSerialize ser);
 	virtual bool								NetSerialize(TSerialize ser, EEntityAspects aspect, uint8 profile, int pflags);
@@ -37,9 +37,8 @@ class											CActor :
 
 	virtual void								GetMemoryUsage(ICrySizer *pSizer) const;
 	virtual bool								GetEntityPoolSignature(TSerialize signature);
-	virtual NetworkAspectType					GetNetSerializeAspects() { return eEA_All; }
+	virtual NetworkAspectType					GetNetSerializeAspects();
 	virtual ISerializableInfoPtr				GetSpawnInfo();
-	virtual const void							*GetRMIBase() const;
 
 	virtual void								SetChannelId(uint16 id);
 	virtual void								SetAuthority(bool auth);
@@ -57,49 +56,40 @@ class											CActor :
 	virtual void								CameraShake(float angle, float shift, float duration, float frequency, Vec3 pos, int ID, const char* source = "");
 	virtual void								HolsterItem(bool holster, bool playSelect = true, float selectSpeedBias = 1.0f, bool hideLeftHandObject = true);
 	virtual bool								DropItem(EntityId itemId, float impulseScale = 1.0f, bool selectNext = true, bool byDeath = false);
-	virtual void								NotifyCurrentItemChanged(IItem* newItem);
+	virtual void								NotifyCurrentItemChanged(IItem *newItem);
 	virtual IEntity								*LinkToVehicle(EntityId vehicleId);
 	virtual void								ToggleThirdPerson();
-	virtual void								Release();
 	virtual void								InitLocalPlayer();
 	virtual void								SerializeXML(XmlNodeRef& node, bool bLoading);
 	virtual void								SerializeLevelToLevel(TSerialize &ser);
-	virtual void								ProcessEvent(SEntityEvent& event);
-	virtual void								PlayExactPositioningAnimation(const char* sAnimationName, bool bSignal, const Vec3& vPosition, const Vec3& vDirection, float startWidth, float startArcAngle, float directionTolerance);
+	virtual void								PlayExactPositioningAnimation(const char *sAnimationName, bool bSignal, const Vec3& vPosition, const Vec3& vDirection, float startWidth, float startArcAngle, float directionTolerance);
 	virtual void								CancelExactPositioningAnimation();
-	virtual void								PlayAnimation(const char* sAnimationName, bool bSignal);
-	virtual bool								Respawn()
-	{
-		CryWarning(VALIDATOR_MODULE_GAME, VALIDATOR_WARNING, "Use of IActor::Respawn when not implemented!");
-		return false;
-	}
-	virtual void								ResetToSpawnLocation()
-	{
-		CryWarning(VALIDATOR_MODULE_GAME, VALIDATOR_WARNING, "Use of IActor::ResetToSpawnLocation when not implemented!");
-	}
-	virtual bool								CanBreakGlass() const
-	{
-		return false;
-	}
-	virtual bool								MustBreakGlass() const
-	{
-		return false;
-	}
+	virtual void								PlayAnimation(const char *sAnimationName, bool bSignal);
+	virtual bool								Respawn();
+	virtual void								ResetToSpawnLocation();
+	virtual bool								CanBreakGlass() const;
+	virtual bool								MustBreakGlass() const;
 	virtual void								EnableTimeDemo(bool bTimeDemo);
 	virtual	void								SwitchDemoModeSpectator(bool activate);
 	virtual void								OnAIProxyEnabled(bool enabled);
 	virtual void								OnReturnedToPool();
 	virtual void								OnPreparedFromPool();
 	virtual void								OnShiftWorld();
-	virtual void								MountedGunControllerEnabled(bool val) {}
-	virtual bool								MountedGunControllerEnabled() const { return false; }
+	virtual void								MountedGunControllerEnabled(bool val);
+	virtual bool								MountedGunControllerEnabled() const;
 	virtual bool								ShouldMuteWeaponSoundStimulus() const;
+	virtual void								OnAction(const ActionId &actionId, int activationMode, float value);
+	virtual void								OnReused(IEntity *pEntity, SEntitySpawnParams &params);
 
 	virtual float								GetHealth() const;
 	virtual int									GetHealthAsRoundedPercentage() const;
 	virtual float								GetMaxHealth() const;
 	virtual int									GetArmor() const;
 	virtual int									GetMaxArmor() const;
+	virtual int									GetAtt() const;
+	virtual int									GetMaxAtt() const;
+	virtual float								GetSpeed() const;
+	virtual float								GetMaxSpeed() const;
 	virtual bool								IsFallen() const;
 	virtual bool								IsDead() const;
 	virtual int									IsGod();
@@ -115,8 +105,8 @@ class											CActor :
 	virtual IEntity								*GetLinkedEntity() const;
 	virtual uint8								GetSpectatorMode() const;
 	virtual bool								IsThirdPerson() const;
-	virtual bool								IsStillWaitingOnServerUseResponse() const { return false; }
-	virtual uint8								GetFlyMode() const { return 0; };
+	virtual bool								IsStillWaitingOnServerUseResponse() const;
+	virtual uint8								GetFlyMode() const;
 	virtual bool								IsPlayer() const;
 	virtual bool								IsClient() const;
 	virtual bool								IsMigrating() const;
@@ -131,7 +121,6 @@ class											CActor :
 	}
 	virtual IVehicle							*GetLinkedVehicle() const;
 	virtual int									GetPhysicalSkipEntities(IPhysicalEntity** pSkipList, const int maxSkipSize) const { return 0; }
-	virtual void								OnReused(IEntity *pEntity, SEntitySpawnParams &params);
 
 	virtual void								SetHealth(float health);
 	virtual void								SetMaxHealth(float maxHealth);
@@ -147,6 +136,16 @@ class											CActor :
 		GetGameObject()->SetChannelId(id);
 	}
 	virtual void								SetCustomHead(const char* customHead);
+
+protected:
+	float										_health;
+	float										_maxHealth;
+	int											_armor;
+	int											_maxArmor;
+	int											_att;
+	int											_maxAtt;
+	float										_speed;
+	float										_maxSpeed;
 };
 
 #endif // _ACTOR_H_

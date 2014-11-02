@@ -578,6 +578,7 @@
     </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="Actor.cpp" />
     <ClCompile Include="EditorGame.cpp" />
     <ClCompile Include="Game.cpp" />
     <ClCompile Include="GameRules.cpp" />
