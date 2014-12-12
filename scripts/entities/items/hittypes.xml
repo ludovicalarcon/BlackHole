@@ -1,0 +1,11 @@
+<HitTypes>
+  <hit_type name="repair" flags="SinglePlayerOnly"/>
+  <hit_type name="event" flags="SinglePlayerOnly"/>
+  <hit_type name="impulse_hit" flags="SinglePlayerOnly"/>
+  <hit_type name="disableCollisions" flags="Server"/>
+  <hit_type name="bullet" flags="ValidationRequired"/>
+  <hit_type name="PistolBullet" flags="ValidationRequired"/>
+  <hit_type name="RifleBullet" flags="ValidationRequired"/>
+  <hit_type name="Tank125" flags="ValidationRequired"/>
+  <hit_type name="MGBullet" flags="ValidationRequired"/>
+</HitTypes>

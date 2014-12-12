@@ -1,0 +1,4 @@
+<Entity
+ Name="PickableAmmo"
+ Script="Scripts/Entities/Items/PickableAmmo.lua"
+/>

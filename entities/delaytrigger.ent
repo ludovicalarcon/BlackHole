@@ -1,0 +1,4 @@
+<Entity
+ Name="DelayTrigger" 
+ Script="Scripts/Entities/Triggers/DelayTrigger.lua"
+/>

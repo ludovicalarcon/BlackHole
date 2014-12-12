@@ -1,0 +1,734 @@
+<Communications>
+
+	<Config name="Human">
+
+		<!--
+		Example on how to set up correctly a communication using conditions for the variation
+
+		<Communication name="SuppressingFireToProtectOthersFirstContact" finishMethod="voice" blocking="none">
+			<Variation voiceName="combat_contact_player_alone"/>
+			<Variation voiceName="combat_contact_player_alone_and_target_above" condition="TargetIsAbove" />
+			<Variation voiceName="combat_contact_player_alone_and_target_below" condition="TargetIsBelow" />
+			<Variation voiceName="combat_contact_player_alone_and_target_below_and_Canyon" condition="TargetIsBelow and LevelIsCanyon" />
+		</Communication>
+
+		-->
+
+		<!-- DEATH & PAIN -->
+
+		<Communication name="comm_death" finishMethod="voice" blocking="none">
+			<Variation voiceName="Death" />
+		</Communication>
+
+		<Communication name="comm_pain" finishMethod="voice" blocking="none">
+			<Variation voiceName="Pain" />
+		</Communication>
+
+		<Communication name="choke_grab" finishMethod="voice" blocking="none">
+			<Variation voiceName="Choke" />
+		</Communication>
+
+		<Communication name="comm_falling_death" finishMethod="voice" blocking="none">
+			<Variation voiceName="DeathMelee" />
+		</Communication>
+		
+		<Communication name="comm_death_melee" finishMethod="sound" blocking="none">
+			<Variation voiceName="DeathMelee" />
+		</Communication>
+		
+		<Communication name="comm_headshot_death" finishMethod="sound" blocking="none">
+			<Variation voiceName="DeathHeadshot" />
+		</Communication>
+
+		<!-- UNSORTED -->
+		
+		<Communication name="RadioCheck" finishMethod="voice" blocking="none">
+			<Variation voiceName="RadioCheck" />
+		</Communication>
+
+		<Communication name="FindBodyStartSearch" finishMethod="all" blocking="none">
+			<Variation voiceName="FindBosyStartSearch" animationName="RA_fanout_ub" />
+		</Communication>
+
+		<Communication name="PersonalSearchCommand" finishMethod="voice" blocking="none">
+			<Variation voiceName="PersonalSearchCommand" />
+		</Communication>
+
+		<Communication name="TauntPlayerHiding" finishMethod="voice" blocking="none">
+			<Variation voiceName="TauntPlayerHiding" />
+		</Communication>
+
+		<Communication name="AIUsesAGL" finishMethod="voice" blocking="none">
+			<Variation voiceName="AIUsesAGL" />
+		</Communication>
+
+		<Communication name="AIUsesMountedGun" finishMethod="voice" blocking="none">
+			<Variation voiceName="AIUsesMountedGun" />
+		</Communication>
+
+		<Communication name="PlayerRevealedWithEMP" finishMethod="voice" blocking="none">
+			<Variation voiceName="PlayerRevealedWithEMP" />
+		</Communication>
+
+		<Communication name="NoticeTurretOffline" finishMethod="voice" blocking="none">
+			<Variation voiceName="NoticeTurretOffline" />
+		</Communication>
+
+		<Communication name="AdvancingLastKnown" finishMethod="voice" blocking="none">
+			<Variation voiceName="AdvancingLastKnown" />
+		</Communication>
+		
+		<Communication name="AloneTalk" finishMethod="voice" blocking="none">
+			<Variation voiceName="LastCellTaunt" />
+		</Communication>
+
+		<Communication name="NoticePlayerGrabbing" finishMethod="voice" blocking="none">
+			<Variation voiceName="NoticePlayerGrabbing" />
+		</Communication>
+		
+		<Communication name="CommentOnFleeingTarget" finishMethod="voice" blocking="none">
+			<Variation voiceName="AttackNoise" />
+		</Communication>
+		
+		<Communication name="CommentOnApproachingTarget" finishMethod="voice" blocking="none">
+			<Variation voiceName="CommandRetreat" />
+		</Communication>
+		
+		<Communication name="NoticePlayerUsingTyphoon" finishMethod="voice" blocking="none">
+			<Variation voiceName="NoticePlayerUsingTyphoon" />
+		</Communication>
+
+		<Communication name="NoticePlayerUsingDSG1" finishMethod="voice" blocking="none">
+			<Variation voiceName="NoticePlayerUsingDSG1" />
+		</Communication>
+
+		<Communication name="NoticePlayerUsingLtag" finishMethod="voice" blocking="none">
+			<Variation voiceName="NoticePlayerUsingLtag" />
+		</Communication>
+
+		<Communication name="NoticePlayerUsingJaw" finishMethod="voice" blocking="none">
+			<Variation voiceName="NoticePlayerUsingJaw" />
+		</Communication>
+
+		<Communication name="Affirmative" finishMethod="voice" blocking="none">
+			<Variation voiceName="Affirmative" />
+		</Communication>
+
+		<Communication name="Negative" finishMethod="voice" blocking="none">
+			<Variation voiceName="Negative" />
+		</Communication>
+
+		<Communication name="ReachedLastKnownTargetPosition" finishMethod="all" blocking="none" forceAnimation="1">
+			<Variation voiceName="CanAnyoneSeeTheTarget" animationName="AI_SearchLookAround" />
+			<Variation voiceName="SearchedTheTargetLastKnowPosition" animationName="AI_SearchLookAround" />
+		</Communication>
+
+		<Communication name="StartleFromBulletRain" finishMethod="voice" blocking="none">
+			<Variation voiceName="UnexpectedEnemyDamage" />
+		</Communication>
+
+		<Communication name="NoticedThrownObject" finishMethod="voice" blocking="none">
+			<Variation voiceName="NoticedThrownObject" />
+		</Communication>
+
+		<Communication name="EngagingSoundThatHasBeenHeardManyTimes" finishMethod="voice" blocking="none">
+			<Variation voiceName="NoticedThrownObject" />
+		</Communication>
+
+		<Communication name="TakingFireWhileAdvancing" finishMethod="voice" blocking="none">
+			<Variation voiceName="TakingFireWhileAdvancing" />
+		</Communication>
+
+		<!-- An agent was has recieved enemy damage while being unaware of the source of a threat -->
+		<Communication name="UnexpectedEnemyDamage" finishMethod="voice" blocking="none">
+			<Variation voiceName="UnexpectedEnemyDamage" />
+		</Communication>
+		
+		<Communication name="LastCellTaunt" finishMethod="voice" blocking="none">
+			<Variation voiceName="LastCellTaunt" />
+		</Communication>
+
+		<!--
+			NOTICING A THREAT THAT IS NOT YET BEEN IDENTIFIED
+			They have seen something far away and it could be the player
+			They put a hand over the eyes to see from distance
+		-->
+
+		<!-- FAR THREAT -->
+		<Communication name="NoticedFarThreat" finishMethod="voice" blocking="none">
+			<Variation voiceName="NoticedFarThreat" />
+		</Communication>
+
+		<!-- MIDDLE AND CLOSE RANGE THREAT -->
+		<Communication name="NoticedSomethingSeen" finishMethod="voice" blocking="none">
+			<Variation voiceName="NoticedSomethingSeen" />
+		</Communication>
+
+		<!-- FALSE ALARM -->
+		<Communication name="NoticedFalseAlarm" finishMethod="voice" blocking="none">
+			<Variation voiceName="NoticedFalseAlarm" />
+		</Communication>
+
+		<!--
+			The guy sees several false alarm and goes to combat since he supposes that some sort
+			of threat is actually around him.
+		-->
+
+		<Communication name="NoticeSeveralFalseAlarms" finishMethod="voice" blocking="none">
+			<Variation voiceName="PlayerSeenSeveralFalseAlarms" />
+		</Communication>
+
+		<!--
+			INVESTIGATE UNKNOWN THREAT
+			One guy starts to advance to investigate an unknown threat and another one responds
+		-->
+
+		<Communication name="GoingToInvestigateUnknownThreat" finishMethod="voice" blocking="none">
+			<Variation voiceName="GoingToInvestigateUnknownThreat" />
+		</Communication>
+
+		<Communication name="ResponseToGoingToInvestigateUnknownThreat" finishMethod="voice" blocking="none">
+			<Variation voiceName="Affirmative" />
+		</Communication>
+
+		<!--
+
+		SUPPRESSING FIRE TO PROTECT OTHERS
+
+		They don't know where the player is.
+		The player opens fire.
+		One of the soldiers goes down on his knees and screams "suppressing fire, take cover!"
+		The other soldiers run for cover.
+
+		-->
+
+		<Communication name="SuppressingFireToProtectOthersFirstContact" finishMethod="voice" blocking="none">
+			<Variation voiceName="SuppressingFireToProtectOthersFirstContact" />
+		</Communication>
+
+		<Communication name="SuppressingFireToProtectOthers" finishMethod="voice" blocking="none">
+			<Variation voiceName="SuppressingFireToProtectOthers" />
+			<Variation voiceName="SuppressingFireToProtectOthersLevelCanyon" condition="LevelIsCanyon" />
+		</Communication>
+
+
+
+		<!--
+
+		ADVANCING
+
+		A couple of soldiers are in cover, but they haven't seen the player
+		in five seconds.
+		One of the soldiers wants to advance towards the player so he says "Need to move up, cover me!"
+		Another soldier responds to that by saying "Roger!"
+		Then the first soldier advances and screams "Moving up!"
+
+		-->
+
+		<!-- Need to move up, cover me! -->
+		<Communication name="NeedCoveringFireForAdvance" finishMethod="voice" blocking="none">
+			<Variation voiceName="NeedCoveringFireForAdvance" />
+		</Communication>
+
+		<!-- Gotcha, providing covering fire! -->
+		<Communication name="CoveringFireConfirm" finishMethod="voice" blocking="none">
+			<Variation voiceName="CoverAimToProtectOthers" />
+		</Communication>
+
+		<!-- Okay, here I go! -->
+		<Communication name="AdvancingNowInsideTargetFov" finishMethod="voice" blocking="none">
+			<Variation voiceName="AdvancingNow"/>
+			<Variation voiceName="CommandAlphaTeamMovingUp"/>
+			<Variation voiceName="CommandBravoTeamMovingUp"/>
+		</Communication>
+
+		<Communication name="AdvancingNowOutsideTargetFov" finishMethod="voice" blocking="none">
+			<Variation voiceName="InformFlanking" />
+			<Variation voiceName="InformSurroundTarget" />
+		</Communication>
+
+		<Communication name="UnawareOfTargetAndWitnessedMateDie" finishMethod="voice" blocking="none">
+			<Variation voiceName="NoticedThrownObject"/>
+		</Communication>
+
+
+
+		<Communication name="AwareOfTargetAndWitnessedMateDie" finishMethod="voice" blocking="none">
+			<Variation voiceName="AwareOfTargetAndWitnessedMateDie"/>
+		</Communication>
+
+
+
+		<Communication name="UnawareOfTargetAndFoundDeadBody" finishMethod="voice" blocking="none">
+			<Variation voiceName="UnawareOfTargetAndFoundDeadBody"/>
+		</Communication>
+
+		
+		
+		<!-- 
+		
+		UNAWARE OF TARGET & FOUND DEAD BODY KILLED BY ARROW
+
+		-->
+		
+		<Communication name="DiscoverBodyWithArrow" finishMethod="voice" blocking="none">
+			<Variation voiceName="DiscoverBodyWithArrow"/>
+		</Communication>
+
+		
+
+		<Communication name="AwareOfTargetAndFoundDeadBody" finishMethod="voice" blocking="none">
+			<Variation voiceName="AwareOfTargetAndFoundDeadBody"/>
+		</Communication>
+		
+		
+		
+		<!--
+
+		REACHED TARGET BUT TARGET IS GONE SO PANIC
+
+		A soldier advances all the way to the spot where the player was believed
+		to be in, but he's not there.
+		The soldiers reacts by looking around, in a stressful manner, commenting
+		on the fact that he has no idea where he is now.
+		This will be followed by him searching for you.
+		- I thought I knew he was here, but he isn't here :O
+		- Let's search for him
+
+		-->
+
+		<Communication name="ReachedTargetButTargetIsGone" finishMethod="all" blocking="none" forceAnimation="1">
+			<Variation voiceName="ReachedTargetButTargetIsGone" animationName="AI_SearchLookAround" />
+		</Communication>
+
+
+
+		<!--
+
+		STARTING SEARCH WHEN NOT HAVING BEEN OF A THREAT YET
+
+		An agent starts searching for the target but he never engaged the target yet
+
+		-->
+
+		<Communication name="StartingSearchWithoutBeingAwareOfThreat" finishMethod="animation" blocking="none">
+			<Variation voiceName="StartingSearch" animationName="RA_fanout_ub" />
+		</Communication>
+
+
+		<!--
+
+		STARTING SEARCH
+
+		When an agent starts searching for the target.
+
+		-->
+
+		<Communication name="StartingSearch" finishMethod="all" blocking="none">
+			<Variation voiceName="StartingSearch" animationName="RA_fanout_ub" />
+			<Variation voiceName="PersonalSearchCommand" animationName="RA_fanout_ub" />
+		</Communication>
+
+		<!--
+
+		SEARCH SPOT CLEAR
+
+		When someone has searched behind something they comment on it.
+
+		-->
+
+		<Communication name="SearchSpotClear" finishMethod="voice" blocking="none">
+			<Variation voiceName="SearchSpotClear"/>
+		</Communication>
+
+		<!--
+
+		TARGET STILL LOST
+
+		After a while, an agents comments that the target is still lost
+		when searching behind something.
+
+		-->
+
+		<Communication name="TargetStillLost" finishMethod="voice" blocking="none">
+			<Variation voiceName="TargetStillLost"/>
+		</Communication>
+
+		<!--
+
+		SEARCHED THE TARGET LAST KNOW POSITION
+
+		When an agent searched the last know position of the target.
+
+		-->
+
+		<Communication name="SearchedTheTargetLastKnowPosition" finishMethod="voice" blocking="none">
+			<Variation voiceName="SearchedTheTargetLastKnowPosition"/>
+		</Communication>
+
+
+
+		<!--
+
+		TARGET SPOTTED WHILE SEARCHING
+
+		Soldiers are searching for the player. They have seen him before.
+		One soldier spots the player and comments on that before going into cover.
+
+		-->
+
+		<Communication name="TargetSpottedWhileSearching" finishMethod="voice" blocking="none">
+			<Variation voiceName="TargetSpottedWhileSearching"/>
+		</Communication>
+
+
+
+		<!--
+
+		ATTACK NOISE
+
+		A couple of soldiers are attacking the player from cover.
+		They make angry noises.
+
+		-->
+
+		<Communication name="AttackNoise" finishMethod="voice" blocking="none">
+			<Variation voiceName="AttackNoise"/>
+		</Communication>
+
+
+
+		<!--
+
+		TAKING FIRE IN COVER
+
+		A soldier in cover is shooting towards the player.
+		The player sprays bullets towards the soldier.
+		The soldier responds by staying down in cover and comments on that.
+
+		-->
+
+		<Communication name="TakingFireInCover" finishMethod="voice" blocking="none">
+			<Variation voiceName="TakingFireInCover"/>
+		</Communication>
+
+
+
+		<!--
+
+		COVER COMPROMISED WHILE MOVING TO IT
+
+		A soldier is running towards cover but the player moves into a position
+		which makes the destination useless as cover. He reacts by commenting on it
+		and changing his course to another cover.
+		- I'm exposed
+		- Oh fuck
+		- He's moving too fast
+
+		-->
+
+		<Communication name="CoverCompromisedWhileMovingToIt" finishMethod="voice" blocking="none">
+			<Variation voiceName="CoverCompromisedWhileMovingToIt"/>
+		</Communication>
+
+
+
+		<!--
+
+		COVER COMPROMISED WHILE IN IT
+
+		A soldier engages the player from cover.
+		The player moves to a position that effectively renders the cover useless.
+
+		-->
+
+		<Communication name="CoverCompromisedWhileInIt" finishMethod="voice" blocking="none">
+			<Variation voiceName="CoverCompromisedWhileInIt"/>
+		</Communication>
+
+
+
+		<!--
+
+		UNAWARE OF PLAYER & PLAYER UNCLOAKED
+
+		A soldier isn't aware of the player from before.
+		The player uncloaks right in front of the soldier.
+		The soldier reacts by flinching and comments "He's here"  "Woah"
+
+		-->
+
+		<!-- <Communication name="UnawareOfPlayerAndPlayerUncloaked" finishMethod="voice" blocking="none">
+			<Variation voiceName="combat_close_range"/>
+		</Communication> -->
+
+
+
+		<!--
+
+		AWARE OF PLAYER & PLAYER UNCLOAKED
+
+		A soldier is aware of the player from before.
+		The player uncloaks right in front of the soldier.
+		The soldier reacts by flinching and comments "He's here"  "Woah"
+
+		-->
+
+		<!-- <Communication name="AwareOfPlayerAndPlayerUncloaked" finishMethod="voice" blocking="none">
+			<Variation voiceName="combat_close_range"/>
+		</Communication> -->
+
+		<Communication name="NoticePlayerUncloaked" finishMethod="voice" blocking="none">
+			<!-- <Variation voiceName="surprised" /> -->
+			<Variation voiceName="NoticePlayerUncloaked" />
+		</Communication>
+
+		<!--
+
+		NOTICE TARGET SUCCESSFULLY CLOAK
+
+		A soldier is fighting the player.
+		The player cloaks while the soldier sees it.
+		The soldier is unable to prevent the player
+		from cloaking and comments "he just cloaked!"
+
+		-->
+
+		<Communication name="NoticeTargetSuccessfullyCloak" finishMethod="voice" blocking="none">
+			<Variation voiceName="NoticeTargetSuccessfullyCloak" />
+		</Communication>
+
+		<!--
+
+		NOTICE A CLOAKED TARGET
+
+		A soldier was a glimpse of a target that is cloaked.
+		The soldier comments "woah! there's something here!"
+
+		-->
+
+		<Communication name="NoticeACloakedTarget" finishMethod="voice" blocking="none">
+			<Variation voiceName="NoticeACloakedTarget" />
+		</Communication>
+
+		<!--
+
+		NOTICE PLAYER STAMP
+
+		A soldier is in a range from the player while is performin a stamp.
+		The soldier comment on that.
+
+		-->
+
+		<Communication name="NoticePlayerStamp" finishMethod="voice" blocking="none">
+			<Variation voiceName="NoticePlayerUsingPerkBruteForce" />
+		</Communication>
+
+		<!--
+
+		KILLED PLAYER
+
+		The player gets killed by a soldier.
+		The soldier comments on it.
+		- Primary target is down
+		- We got him
+
+		-->
+
+		<Communication name="KilledPlayer" finishMethod="voice" blocking="none">
+			<Variation voiceName="KilledPlayer" />
+		</Communication>
+
+		<Communication name="KilledPlayerResponse" finishMethod="voice" blocking="none">
+			<Variation voiceName="KilledPlayerResponse" />
+		</Communication>
+
+		<Communication name="RequestReinforcementWhenHidingFromTurret" finishMethod="voice" blocking="none">
+			<Variation voiceName="RequestReinforcementWhenHidingFromTurret" />
+		</Communication>
+
+		<Communication name="NoticeTurretHasBeenDestroyedByPlayer" finishMethod="voice" blocking="none">
+			<Variation voiceName="TurretDestroyedPlayer" /> <!-- TEMPORARY: This should be a separate VO -->
+		</Communication>
+		
+		<!--
+
+		NOTICE GRENADE
+
+		An agent sees a grenade while in combat, he comments and then he runs away.
+
+		-->
+
+		<Communication name="NoticeGrenade" finishMethod="voice" blocking="none">
+			<Variation voiceName="NoticeGrenade" />
+		</Communication>
+
+		<!--
+
+		NOTICE GRENADE WHEN UNAWARE OF ANY THREAT
+
+		An agent sees a grenade while in idle, he comments and then he runs away.
+
+		-->
+
+		<Communication name="NoticeGrenadeWhileUnawareOfThreat" finishMethod="voice" blocking="none">
+			<Variation voiceName="NoticeGrenadeFromIdle" />
+		</Communication>
+
+		<!--
+
+		THROW GRENADE
+
+		The agent communicates that is is going to throw a grenade
+
+		-->
+
+		<Communication name="ThrowEMP" finishMethod="voice" blocking="none">
+			<Variation voiceName="ThrowEMP" />
+		</Communication>
+
+		<Communication name="ThrowFrag" finishMethod="voice" blocking="none">
+			<Variation voiceName="ThrowFrag" />
+		</Communication>
+
+		<Communication name="ThrowSmoke" finishMethod="voice" blocking="none">
+			<Variation voiceName="ThrowSmoke" />
+		</Communication>
+
+		<Communication name="ThrowFlash" finishMethod="voice" blocking="none">
+			<Variation voiceName="ThrowFlash" />
+		</Communication>
+
+		<Communication name="PanicReaction" finishMethod="voice" blocking="none">
+			<Variation voiceName="PanicReaction" />
+		</Communication>
+
+
+
+		<!--
+
+		HIT BY EXPLOSIVE ARROW
+
+		Player shoots explosive arrow at a soldier.
+		The soldier freaks out and explodes.
+
+		-->
+
+		<Communication name="HitByExplosiveArrow" finishMethod="voice" blocking="none">
+			<!-- <Variation voiceName="bullet_rain_alone" /> -->
+			<Variation voiceName="HitByExplosiveArrow" />
+		</Communication>
+
+
+
+		<!--
+
+		EXPLOSIVE ARROW SPOTTED
+
+		The player shoots an explosive arrow next to a soldier.
+		The soldier screams "it's gonna blow" and runs for cover.
+
+		-->
+
+		<Communication name="ExplosiveArrowSpotted" finishMethod="voice" blocking="none">
+			<Variation voiceName="ExplosiveArrowSpotted" />
+		</Communication>
+
+
+
+		<!--
+
+		EXPLOSIVE OBJECT SPOTTED
+
+		-->
+
+		<Communication name="NoticeExplosion" finishMethod="voice" blocking="none">
+			<Variation voiceName="NoticeExplosion" />
+		</Communication>
+
+
+		<!--
+
+		NOTICE A STRANGE WATER RIPPLE
+
+		The AI is not aware of the player.
+		The AI notices a water ripple which he could not figure out what the source is.
+
+		-->
+
+		<Communication name="NoticeAStrangeWaterRipple" finishMethod="voice" blocking="none">
+			<Variation voiceName="NoticePlayerMovingInTheWater" />
+		</Communication>
+
+		<!--
+
+		NOTICE A SUSPICIOUS SOUND HEARD
+
+		The AI heard a suspicious sound
+		-->
+
+		<Communication name="NoticeSuspiciousSoundHeard" finishMethod="voice" blocking="none">
+			<Variation voiceName="NoticeSuspiciousSoundHeard" />
+		</Communication>
+
+		<!--
+
+		NOTICE MANY STRANGE WATER RIPPLES
+
+		The AI is not aware of the player.
+		The AI notices many water ripples which he could not figure out what the source is.
+
+		-->
+
+		<Communication name="NoticeManyStrangeWaterRipples" finishMethod="voice" blocking="none">
+			<Variation voiceName="NoticePlayerMovingInTheWater" />
+		</Communication>
+
+		<!--
+
+		PERFORMING A MELEE ACTION
+
+		The agent is performing a melee action to the player
+
+		-->
+
+		<Communication name="PerformingAMeleeAttack" finishMethod="voice" blocking="none">
+			<Variation voiceName="Melee" />
+		</Communication>
+
+		<!--
+
+		NOTICE WATER RIPPLES WHILE ALERTED
+
+		The AI is aware of the target but does not have a visual contact.
+		The AI notices water ripples which he could not figure out what the source is.
+
+		-->
+
+		<Communication name="NoticePlayerWaterRipples" finishMethod="voice" blocking="none">
+			<Variation voiceName="PlayerInWater" />
+		</Communication>
+
+		<!--
+
+		AI IS GOING TO USE AN HMG OR AGL
+
+		-->
+
+		<Communication name="ReadyToUseAMountedWeapon" finishMethod="voice" blocking="none">
+			<Variation voiceName="AIUsingHMGorAGL" />
+		</Communication>
+	
+		<!--
+
+		AI NOTICE A MATE DIED WHILE USING AN HMG
+
+		-->
+	
+		<Communication name="NoticeMateDiedOnMountedGun" finishMethod="voice" blocking="none">
+			<Variation voiceName="AIDiesOnMountedGun" />
+		</Communication>
+
+	</Config>
+
+</Communications>

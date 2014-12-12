@@ -1,0 +1,14 @@
+<item name="PistolBulletAmmo" class="Accessory" priority="103">
+	<geometry>
+	</geometry>
+	<params>
+		<param name="display_name" value="@mp_ePistolBulletAmmo" />
+		<param name="giveable" value="1" />
+		<param name="selectable" value="0" />
+		<param name="droppable" value="0" />
+		<param name="attachment_gives_ammo" value="1" />
+	</params>
+	<accessoryAmmo>
+		<ammo name="PistolBullet" amount="27" />
+	</accessoryAmmo>
+</item>

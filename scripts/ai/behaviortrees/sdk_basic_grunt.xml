@@ -1,0 +1,99 @@
+<BehaviorTree>
+
+	<Variables>
+		<Variable name="ExecuteSequence" />
+		<Variable name="ExecuteInterruptibleSequence" />
+		<Variable name="HasTarget" />
+	</Variables>
+
+	<SignalVariables>
+		<Signal name="OnNewAttentionTarget" variable="HasTarget" value="true" />
+	<!--	<Signal name="OnNoTarget" variable="HasTarget" value="false" />
+		<Signal name="OnTargetFleeing" variable="HasTarget" value="false" />
+		<Signal name="OnLostSightOfTarget" variable="HasTarget" value="false" /> -->
+	</SignalVariables>
+	
+	<Timestamps>
+	</Timestamps>
+	
+	<Root>
+	
+		<Priority>
+
+			<Case condition="ExecuteSequence" _startLog="Executing scripted uninterruptible sequence" _endLog="Ended execution of scripted uninterruptible sequence">				
+				<Sequence>
+					<LuaBehavior name="ExecuteSequence" />
+				</Sequence>
+			</Case>
+			
+			<Case>
+				<!-- This is the regular AI behavior -->
+				<StateMachine>
+				
+					<State name="Idle">
+						<Transitions>
+							<Transition to="Combat" onEvent="OnNewAttentionTarget" />
+						</Transitions>
+						<BehaviorTree>
+							<Sequence>
+								<SetAlertness value="0" />
+								<Priority>
+									<Case condition="ExecuteInterruptibleSequence" _startLog="Executing scripted interruptible sequence">
+										<Sequence>
+											<LuaBehavior name="ExecuteInterruptibleSequence" />
+										</Sequence>
+									</Case>
+
+									<Case _startLog="Basic: Normal Idle behavior">
+										<Sequence>
+											<ExecuteLua code="entity:SelectPrimaryWeapon()"/>
+											<Animate name="AI_SearchLookAround" />
+											<Halt />
+										</Sequence>
+									</Case>
+
+								</Priority>
+							</Sequence>
+						</BehaviorTree>
+					</State>
+										
+					<State name="Combat">
+						<Transitions>
+							<Transitions to="Idle" onEvent="GoToIdle" />
+						</Transitions>
+						
+						<BehaviorTree  _startLog="Combat behavior">
+							<Sequence>
+								<SetAlertness value="2" />
+								<Priority>
+									<Case condition="HasTarget">
+										<Loop>
+											<Sequence>
+												<Log message="Now I should fight you!" />
+												<ExecuteLua code="entity:SelectPrimaryWeapon()"/>
+												<!-- <TurnBody towards="Target" /> NEED MANNEQUIN SETUP FOR THIS -->
+												<Move to="Target" speed="Run" stance="Stand" avoidDangers="0" stopWithinDistance="10" _failureLog="I cannot move towards the target. Something went wrong."/>
+												<Shoot at="Target" fireMode="Burst" stance="Stand" duration="0.1"/>
+											</Sequence>
+										</Loop>
+									</Case>
+									<Case>
+										<Sequence>
+											<Log message="Lost target, back to idle!" />
+											<SendTransitionSignal name="GoToIdle" />
+										</Sequence>
+									</Case>
+								</Priority>	
+								<Halt />						
+							</Sequence>
+						</BehaviorTree>
+					</State>
+				
+				</StateMachine>
+			
+			</Case>
+		
+		</Priority>
+	
+	</Root>
+</BehaviorTree>

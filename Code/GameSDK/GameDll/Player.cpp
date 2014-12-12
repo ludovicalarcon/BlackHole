@@ -670,7 +670,7 @@ bool CPlayer::Init(IGameObject * pGameObject)
 	{
 		InitLocalPlayer();
 	}
-
+	
 	// This must come after CActor::Init as it's that function that determines whether we're a player or an AI.
 	SelectMovementHierarchy();
 
@@ -814,7 +814,20 @@ bool CPlayer::Init(IGameObject * pGameObject)
 		StateMachineHandleEventMovement( PLAYER_EVENT_INTRO_START );
 	else
 		StateMachineHandleEventMovement( PLAYER_EVENT_INTRO_FINISHED );
+	// BlackHole
+	SmartScriptTable Properties;
 
+	if (this->GetEntity() && this->GetEntity()->GetScriptTable())
+	{
+		this->GetEntity()->GetScriptTable()->GetValue("Properties", Properties);
+		CScriptSetGetChain params(Properties);
+
+		params.SetValue("fileModel", "D:/Programming/BlackHole/GameSDK/objects/characters/animals/reptiles/turtle/red_eared_slider.cdf");
+		params.SetValue("shadowFileModel", "D:/Programming/BlackHole/GameSDK/objects/characters/animals/reptiles/turtle/red_eared_slider.cdf");
+		params.SetValue("clientFileModel", "D:/Programming/BlackHole/GameSDK/objects/characters/animals/reptiles/turtle/red_eared_slider.cdf");
+		Script::CallMethod(this->GetEntity()->GetScriptTable(), "SetActorModel", this->IsClient());
+	}
+	// BlackHole
 	return true;
 }
 
@@ -3107,7 +3120,7 @@ int CPlayer::IsGod()
 bool CPlayer::IsThirdPerson() const
 {
 	//force thirdperson view for non-clients
-  return !m_isClient || m_stats.isThirdPerson;	
+  return !m_isClient || !m_stats.isThirdPerson;	
 }
 
 void CPlayer::SpawnCorpse()
