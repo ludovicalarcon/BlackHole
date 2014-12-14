@@ -30,7 +30,7 @@ CLTag::CLTag()
 	if(ltagActionHandler.GetNumHandlers() == 0)
 	{
 		const CGameActions& actions = g_pGame->Actions();
-		ltagActionHandler.AddHandler(actions.weapon_change_firemode, &CLTag::OnActionSwitchFireMode);
+		//ltagActionHandler.AddHandler(actions.weapon_change_firemode, &CLTag::OnActionSwitchFireMode);
 	}
 }
 

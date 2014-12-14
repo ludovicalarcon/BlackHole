@@ -224,74 +224,77 @@ bool CItem::Init( IGameObject *pGameObject )
 {
 	SetGameObject(pGameObject);
 
-#ifdef ITEM_DEBUG_MEMALLOC
-	CGame::DumpMemInfo("CItem::Init Instance=%d %p Id=%d Class=%s", gInstanceCount, GetGameObject(), GetEntityId(), gEnv->pEntitySystem->GetEntity(GetEntityId())->GetClass()->GetName());
-#endif
+// BlackHole
 
-	if (!m_pGameFramework)
-	{
-		m_pEntitySystem = gEnv->pEntitySystem;
-		m_pGameFramework= gEnv->pGame->GetIGameFramework();
-		m_pGameplayRecorder = m_pGameFramework->GetIGameplayRecorder();
-		m_pItemSystem = m_pGameFramework->GetIItemSystem();
+//#ifdef ITEM_DEBUG_MEMALLOC
+//	CGame::DumpMemInfo("CItem::Init Instance=%d %p Id=%d Class=%s", gInstanceCount, GetGameObject(), GetEntityId(), gEnv->pEntitySystem->GetEntity(GetEntityId())->GetClass()->GetName());
+//#endif
+//
+//	if (!m_pGameFramework)
+//	{
+//		m_pEntitySystem = gEnv->pEntitySystem;
+//		m_pGameFramework= gEnv->pGame->GetIGameFramework();
+//		m_pGameplayRecorder = m_pGameFramework->GetIGameplayRecorder();
+//		m_pItemSystem = m_pGameFramework->GetIItemSystem();
+//
+//		IEntityClassRegistry* pClassRegistry = gEnv->pEntitySystem->GetClassRegistry();
+//
+//		sBinocularsClass = pClassRegistry->FindClass("Binoculars");
+//		sDebugGunClass = pClassRegistry->FindClass("DebugGun");
+//		sRefWeaponClass = pClassRegistry->FindClass("RefWeapon");
+//		sLTagGrenade = pClassRegistry->FindClass("LTagGrenade");
+//		sFragHandGrenadesClass = pClassRegistry->FindClass("FragGrenades");
+//		sNoWeaponClass = pClassRegistry->FindClass("NoWeapon");
+//		sWeaponMeleeClass = pClassRegistry->FindClass("WeaponMelee");
+//		sSilencerPistolClass = pClassRegistry->FindClass("SilencerPistol");
+//		sSilencerClass = pClassRegistry->FindClass("Silencer");
+//
+//		sFragmentTagCRCs.Init();
+//		sActionParamCRCs.Init();
+//		s_animationEventsTable.Init();
+//	}
+//
+//	if (!GetGameObject()->CaptureProfileManager(this))
+//		return false;
+//
+//	IEntity* pEntity = GetEntity();
+//
+//	// bind to network
+//	if (0 == (pEntity->GetFlags() & (ENTITY_FLAG_CLIENT_ONLY | ENTITY_FLAG_SERVER_ONLY)))
+//	{
+//		if (!GetGameObject()->BindToNetwork())
+//		{
+//			GetGameObject()->ReleaseProfileManager(this);
+//			return false;
+//		}
+//	}
+//
+//	// register with item system
+//	m_pItemSystem->AddItem(GetEntityId(), this);
+//
+//	// attach script bind
+//	g_pGame->GetItemScriptBind()->AttachTo(this);
+//
+//	if(!ResetParams())
+//	{
+//		//failed to find all appropriate shared parameters bailing out
+//		return false;
+//	}
+//
+//	ClearItemFlags(eIF_NoDrop);
+//
+//	m_effectsController.InitWithEntity(pEntity);
+//
+//	if(!InitActionController(pEntity))
+//	{
+//		return false;
+//	}
+//
+//#ifdef ITEM_DEBUG_MEMALLOC
+//	CGame::DumpMemInfo("CItem::Init End %p Id=%d Class=%s", GetGameObject(), GetEntityId(), gEnv->pEntitySystem->GetEntity(GetEntityId())->GetClass()->GetName());
+//#endif
 
-		IEntityClassRegistry* pClassRegistry = gEnv->pEntitySystem->GetClassRegistry();
-
-		sBinocularsClass = pClassRegistry->FindClass("Binoculars");
-		sDebugGunClass = pClassRegistry->FindClass("DebugGun");
-		sRefWeaponClass = pClassRegistry->FindClass("RefWeapon");
-		sLTagGrenade = pClassRegistry->FindClass("LTagGrenade");
-		sFragHandGrenadesClass = pClassRegistry->FindClass("FragGrenades");
-		sNoWeaponClass = pClassRegistry->FindClass("NoWeapon");
-		sWeaponMeleeClass = pClassRegistry->FindClass("WeaponMelee");
-		sSilencerPistolClass = pClassRegistry->FindClass("SilencerPistol");
-		sSilencerClass = pClassRegistry->FindClass("Silencer");
-
-		sFragmentTagCRCs.Init();
-		sActionParamCRCs.Init();
-		s_animationEventsTable.Init();
-	}
-
-	if (!GetGameObject()->CaptureProfileManager(this))
-		return false;
-
-	IEntity* pEntity = GetEntity();
-
-	// bind to network
-	if (0 == (pEntity->GetFlags() & (ENTITY_FLAG_CLIENT_ONLY | ENTITY_FLAG_SERVER_ONLY)))
-	{
-		if (!GetGameObject()->BindToNetwork())
-		{
-			GetGameObject()->ReleaseProfileManager(this);
-			return false;
-		}
-	}
-
-	// register with item system
-	m_pItemSystem->AddItem(GetEntityId(), this);
-
-	// attach script bind
-	g_pGame->GetItemScriptBind()->AttachTo(this);
-
-	if(!ResetParams())
-	{
-		//failed to find all appropriate shared parameters bailing out
-		return false;
-	}
-
-	ClearItemFlags(eIF_NoDrop);
-
-	m_effectsController.InitWithEntity(pEntity);
-
-	if(!InitActionController(pEntity))
-	{
-		return false;
-	}
-
-#ifdef ITEM_DEBUG_MEMALLOC
-	CGame::DumpMemInfo("CItem::Init End %p Id=%d Class=%s", GetGameObject(), GetEntityId(), gEnv->pEntitySystem->GetEntity(GetEntityId())->GetClass()->GetName());
-#endif
-
+// BlackHole
 	return true;
 }
 

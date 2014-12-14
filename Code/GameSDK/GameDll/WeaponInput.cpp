@@ -56,17 +56,17 @@ void CWeapon::RegisterActions()
 		#define ADD_HANDLER(action, func) weaponActionHandler.AddHandler(actions.action, &CWeapon::func)
 		const CGameActions& actions = g_pGame->Actions();
 
-		ADD_HANDLER(attack1, OnActionAttackPrimary);
+		//ADD_HANDLER(attack1, OnActionAttackPrimary);
 		ADD_HANDLER(attack1_xi, OnActionAttackPrimary);
 		ADD_HANDLER(attack2_xi,OnActionAttackSecondary);
 		ADD_HANDLER(reload,OnActionReload);
 		ADD_HANDLER(special,OnActionSpecial);
 		ADD_HANDLER(modify,OnActionModify);
-		ADD_HANDLER(weapon_change_firemode,OnActionFiremode);
+//		ADD_HANDLER(weapon_change_firemode,OnActionFiremode);
 		ADD_HANDLER(zoom_toggle,OnActionZoomToggle);
 		ADD_HANDLER(zoom_in,OnActionZoomIn);
 		ADD_HANDLER(zoom_out,OnActionZoomOut);
-		ADD_HANDLER(zoom,OnActionZoom);
+		//ADD_HANDLER(zoom,OnActionZoom);
 		ADD_HANDLER(xi_zoom,OnActionZoom);
 		ADD_HANDLER(sprint,OnActionSprint);
 		ADD_HANDLER(sprint_xi,OnActionSprint);
@@ -249,26 +249,28 @@ bool CWeapon::OnActionSprint(EntityId actorId, const ActionId& actionId, int act
 //Controller input (primary fire)
 bool CWeapon::OnActionAttackPrimary(EntityId actorId, const ActionId& actionId, int activationMode, float value)
 {
-	if (activationMode == eAAM_OnPress && (!gEnv->bMultiplayer || m_weaponNextShotTimer <= 0.f))
-	{
-		if(PreActionAttack(true))
-			return true;
+// BlackHole
 
-		StartFire();
-	}
-	else if(activationMode == eAAM_OnHold)
-	{
-		if((!gEnv->bMultiplayer || m_weaponNextShotTimer <= 0.f) && m_fm && m_fm->CanFire() && !m_fm->IsFiring() && !IsDeselecting() && !CheckSprint())
-		{
-			StartFire();
-		}		
-	}
-	else
-	{
-		PreActionAttack(false);
-		StopFire();
-	}
+	//if (activationMode == eAAM_OnPress && (!gEnv->bMultiplayer || m_weaponNextShotTimer <= 0.f))
+	//{
+	//	if(PreActionAttack(true))
+	//		return true;
 
+	//	StartFire();
+	//}
+	//else if(activationMode == eAAM_OnHold)
+	//{
+	//	if((!gEnv->bMultiplayer || m_weaponNextShotTimer <= 0.f) && m_fm && m_fm->CanFire() && !m_fm->IsFiring() && !IsDeselecting() && !CheckSprint())
+	//	{
+	//		StartFire();
+	//	}		
+	//}
+	//else
+	//{
+	//	PreActionAttack(false);
+	//	StopFire();
+	//}
+// BlackHole
 	return true;
 }
 //---------------------------------------------------------

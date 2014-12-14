@@ -133,7 +133,7 @@ void CHeavyMountedWeapon::RegisterActionsHMG()
 		const CGameActions& actions = g_pGame->Actions();
 
 		ADD_HANDLER(special,OnActionRipOff);
-		ADD_HANDLER(weapon_change_firemode,OnActionFiremode);
+//		ADD_HANDLER(weapon_change_firemode,OnActionFiremode);
 #undef ADD_HANDLER
 	}
 }

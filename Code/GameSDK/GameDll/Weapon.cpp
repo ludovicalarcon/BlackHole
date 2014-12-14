@@ -265,146 +265,155 @@ CWeapon::~CWeapon()
 //------------------------------------------------------------------------
 void CWeapon::InitItemFromParams()
 {
-	BaseClass::InitItemFromParams();
-	
-	InitAmmo();
-	InitFireModes();
-	InitZoomModes();
-	InitAIData();
-	InitWeaponStats();
-	InitCompatibleAccessories();
+// BlackHole
+
+	//BaseClass::InitItemFromParams();
+	//
+	//InitAmmo();
+	//InitFireModes();
+	//InitZoomModes();
+	//InitAIData();
+	//InitWeaponStats();
+	//InitCompatibleAccessories();
+// Blackhole
 }
 
 
 //------------------------------------------------------------------------
 void CWeapon::InitCompatibleAccessories()
 {
-	m_compatibleAccessories.clear();
+// BlackHole
+	//m_compatibleAccessories.clear();
 
-	int n = m_sharedparams->accessoryparams.size();
-	for (int i = 0; i < n; i++)
-	{
-		const SAccessoryParams accessory =  m_sharedparams->accessoryparams[i];
-		string name = accessory.pAccessoryClass->GetName();
-		m_compatibleAccessories.push_back(name);
-	}
+	//int n = m_sharedparams->accessoryparams.size();
+	//for (int i = 0; i < n; i++)
+	//{
+	//	const SAccessoryParams accessory =  m_sharedparams->accessoryparams[i];
+	//	string name = accessory.pAccessoryClass->GetName();
+	//	m_compatibleAccessories.push_back(name);
+	//}
+// BlackHole
 }
 
 //------------------------------------------------------------------------
 void CWeapon::InitFireModes()
 {
 	FUNCTION_PROFILER(GetISystem(), PROFILE_GAME);
+// Blackhole
+	//ReleaseAndClear(m_firemodes);
+	//m_fmIds.clear();
+	//m_fm = NULL;
+	//
+	//SAFE_RELEASE(m_melee);
 
-	ReleaseAndClear(m_firemodes);
-	m_fmIds.clear();
-	m_fm = NULL;
-	
-	SAFE_RELEASE(m_melee);
+	//int n = m_weaponsharedparams->firemodeParams.size();
+	//
+	//m_firemodes.reserve(n);
+	//m_fmIds.reserve(n);
 
-	int n = m_weaponsharedparams->firemodeParams.size();
-	
-	m_firemodes.reserve(n);
-	m_fmIds.reserve(n);
+	//int fireModeId = 0;
+	//for (int i = 0; i<n; i++)
+	//{
+	//	const SParentFireModeParams* pNewParams = &m_weaponsharedparams->firemodeParams[i];
 
-	int fireModeId = 0;
-	for (int i = 0; i<n; i++)
-	{
-		const SParentFireModeParams* pNewParams = &m_weaponsharedparams->firemodeParams[i];
+	//	CFireMode *pFireMode = g_pGame->GetWeaponSystem()->CreateFireMode(pNewParams->initialiseParams.modeType.c_str());
+	//	
+	//	if (!pFireMode)
+	//	{
+	//		GameWarning("Cannot create firemode '%s' in weapon '%s'! Skipping...", pNewParams->initialiseParams.modeType.c_str(), GetEntity()->GetName());
+	//		continue;
+	//	}
 
-		CFireMode *pFireMode = g_pGame->GetWeaponSystem()->CreateFireMode(pNewParams->initialiseParams.modeType.c_str());
-		
-		if (!pFireMode)
-		{
-			GameWarning("Cannot create firemode '%s' in weapon '%s'! Skipping...", pNewParams->initialiseParams.modeType.c_str(), GetEntity()->GetName());
-			continue;
-		}
+	//	pFireMode->SetName(pNewParams->initialiseParams.modeName.c_str());
+	//	pFireMode->InitFireMode(this, pNewParams);
+	//	pFireMode->Enable(pNewParams->initialiseParams.enabled);
+	//	pFireMode->PostInit();
 
-		pFireMode->SetName(pNewParams->initialiseParams.modeName.c_str());
-		pFireMode->InitFireMode(this, pNewParams);
-		pFireMode->Enable(pNewParams->initialiseParams.enabled);
-		pFireMode->PostInit();
+	//	m_firemodes.push_back(pFireMode);
+	//	m_fmIds.insert(TFireModeIdMap::value_type(CryHashStringId(pNewParams->initialiseParams.modeName.c_str()), fireModeId));
+	//	
+	//	fireModeId++;
+	//}
 
-		m_firemodes.push_back(pFireMode);
-		m_fmIds.insert(TFireModeIdMap::value_type(CryHashStringId(pNewParams->initialiseParams.modeName.c_str()), fireModeId));
-		
-		fireModeId++;
-	}
+	//if(m_weaponsharedparams->pMeleeModeParams)
+	//{
+	//	m_melee = g_pGame->GetWeaponSystem()->CreateMeleeMode();
 
-	if(m_weaponsharedparams->pMeleeModeParams)
-	{
-		m_melee = g_pGame->GetWeaponSystem()->CreateMeleeMode();
-
-		if (m_melee)
-		{
-			m_melee->InitMeleeMode(this, m_weaponsharedparams->pMeleeModeParams);
-		}
-		else
-		{
-			GameWarning("Cannot create melee mode for weapon '%s'!", GetEntity()->GetName());
-		}
-	}
-	
-	SetCurrentFireMode(0);
+	//	if (m_melee)
+	//	{
+	//		m_melee->InitMeleeMode(this, m_weaponsharedparams->pMeleeModeParams);
+	//	}
+	//	else
+	//	{
+	//		GameWarning("Cannot create melee mode for weapon '%s'!", GetEntity()->GetName());
+	//	}
+	//}
+	//
+	//SetCurrentFireMode(0);
+// Blackhole
 }
 
 //------------------------------------------------------------------------
 void CWeapon::InitZoomModes()
 {
 	FUNCTION_PROFILER(GetISystem(), PROFILE_GAME);
+// BlackHole
+	//ReleaseAndClear(m_zoommodes);
+	//m_zmIds.clear();
+	//m_zmNames.clear();
+	//m_zmId = 0;
+	//m_zm = 0;
+	//m_primaryZmId = 0;
+	//m_secondaryZmId = 0;
 
-	ReleaseAndClear(m_zoommodes);
-	m_zmIds.clear();
-	m_zmNames.clear();
-	m_zmId = 0;
-	m_zm = 0;
-	m_primaryZmId = 0;
-	m_secondaryZmId = 0;
+	//int n = m_weaponsharedparams->zoommodeParams.size();
+	//m_zoommodes.reserve(n);
+	//m_zmIds.reserve(n);
+	//m_zmNames.reserve(n);
 
-	int n = m_weaponsharedparams->zoommodeParams.size();
-	m_zoommodes.reserve(n);
-	m_zmIds.reserve(n);
-	m_zmNames.reserve(n);
+	//for (int i = 0; i < n; i++)
+	//{
+	//	const SParentZoomModeParams* pNewParams = &m_weaponsharedparams->zoommodeParams[i];
 
-	for (int i = 0; i < n; i++)
-	{
-		const SParentZoomModeParams* pNewParams = &m_weaponsharedparams->zoommodeParams[i];
+	//	CIronSight *pZoomMode = static_cast<CIronSight*>(g_pGame->GetWeaponSystem()->CreateZoomMode(pNewParams->initialiseParams.modeType.c_str()));
+	//	if (!pZoomMode)
+	//	{
+	//		GameWarning("Cannot create zoommode '%s' in weapon '%s'! Skipping...", pNewParams->initialiseParams.modeType.c_str(), GetEntity()->GetName());
+	//		continue;
+	//	}
 
-		CIronSight *pZoomMode = static_cast<CIronSight*>(g_pGame->GetWeaponSystem()->CreateZoomMode(pNewParams->initialiseParams.modeType.c_str()));
-		if (!pZoomMode)
-		{
-			GameWarning("Cannot create zoommode '%s' in weapon '%s'! Skipping...", pNewParams->initialiseParams.modeType.c_str(), GetEntity()->GetName());
-			continue;
-		}
+	//	pZoomMode->InitZoomMode(this, pNewParams, m_zoommodes.size());
+	//	pZoomMode->Enable(pNewParams->initialiseParams.enabled);
 
-		pZoomMode->InitZoomMode(this, pNewParams, m_zoommodes.size());
-		pZoomMode->Enable(pNewParams->initialiseParams.enabled);
-
-		m_zoommodes.push_back(pZoomMode);
-		int idx = m_zoommodes.size()-1;
-		m_zmIds.insert(TZoomModeIdMap::value_type(CryHashStringId(pNewParams->initialiseParams.modeName.c_str()), idx));
-		m_zmNames.insert(TZoomModeNameMap::value_type(idx, pNewParams->initialiseParams.modeName.c_str()));
-	}
+	//	m_zoommodes.push_back(pZoomMode);
+	//	int idx = m_zoommodes.size()-1;
+	//	m_zmIds.insert(TZoomModeIdMap::value_type(CryHashStringId(pNewParams->initialiseParams.modeName.c_str()), idx));
+	//	m_zmNames.insert(TZoomModeNameMap::value_type(idx, pNewParams->initialiseParams.modeName.c_str()));
+	//}
+// BlackHole
 }
 
 //------------------------------------------------------------------------
 void CWeapon::InitAmmo()
 {
-	m_ammo = m_weaponsharedparams->ammoParams.ammo;
-	m_bonusammo = m_weaponsharedparams->ammoParams.bonusAmmo;
+// Blackhole
+	//m_ammo = m_weaponsharedparams->ammoParams.ammo;
+	//m_bonusammo = m_weaponsharedparams->ammoParams.bonusAmmo;
 
-	if (gEnv->bMultiplayer)
-	{
-		CGameRules *pGameRules = g_pGame->GetGameRules();
-		if (pGameRules)
-		{
-			IGameRulesObjectivesModule *pObjectivesModule = pGameRules->GetObjectivesModule();
-			if (pObjectivesModule)
-			{
-				// Get override ammo amount
-				pObjectivesModule->UpdateInitialAmmoCounts(GetEntity()->GetClass(), m_ammo, m_bonusammo);
-			}
-		}
-	}
+	//if (gEnv->bMultiplayer)
+	//{
+	//	CGameRules *pGameRules = g_pGame->GetGameRules();
+	//	if (pGameRules)
+	//	{
+	//		IGameRulesObjectivesModule *pObjectivesModule = pGameRules->GetObjectivesModule();
+	//		if (pObjectivesModule)
+	//		{
+	//			// Get override ammo amount
+	//			pObjectivesModule->UpdateInitialAmmoCounts(GetEntity()->GetClass(), m_ammo, m_bonusammo);
+	//		}
+	//	}
+	//}
+// Blackhole
 }
 
 void CWeapon::InitAIData()
@@ -429,7 +438,9 @@ void CWeapon::InitAIData()
 //------------------------------------------------------------------------
 void CWeapon::InitWeaponStats()
 {
-	m_pWeaponStats->SetBaseStats(m_sharedparams);
+// Blackhole
+	//m_pWeaponStats->SetBaseStats(m_sharedparams);
+// Blackhole
 }
 
 //------------------------------------------------------------------------
@@ -438,15 +449,19 @@ bool CWeapon::Init( IGameObject * pGameObject )
 	if (!BaseClass::Init(pGameObject))
 		return false;
 
-	m_heatController.InitWithEntity(GetEntity(), 0.1f);
+// BlackHole
 
-	g_pGame->GetWeaponScriptBind()->AttachTo(this);
+	//m_heatController.InitWithEntity(GetEntity(), 0.1f);
 
-	if(!IsMounted())
-		GetEntity()->SetFlags(GetEntity()->GetFlags()|ENTITY_FLAG_ON_RADAR);
+	//g_pGame->GetWeaponScriptBind()->AttachTo(this);
 
-	if(!gEnv->bMultiplayer)
-		g_pGame->GetTacticalManager()->AddEntity(GetEntityId(), CTacticalManager::eTacticalEntity_Item);
+	//if(!IsMounted())
+	//	GetEntity()->SetFlags(GetEntity()->GetFlags()|ENTITY_FLAG_ON_RADAR);
+
+	//if(!gEnv->bMultiplayer)
+	//	g_pGame->GetTacticalManager()->AddEntity(GetEntityId(), CTacticalManager::eTacticalEntity_Item);
+
+// BlackHole
 
 	return true;
 }
@@ -1181,27 +1196,28 @@ void CWeapon::PreResetParams()
 void CWeapon::Reset()
 {
 	FUNCTION_PROFILER(GetISystem(), PROFILE_GAME);
+// Blackhole
+	//ClearModes();
 
-	ClearModes();
+	//BaseClass::Reset();
+	//ClearInputFlags();
 
-	BaseClass::Reset();
-	ClearInputFlags();
+	//SetCurrentFireMode(0);
+	//SetCurrentZoomMode(0);
 
-	SetCurrentFireMode(0);
-	SetCurrentZoomMode(0);
+	//const int numAccessories = m_accessories.size();
 
-	const int numAccessories = m_accessories.size();
+	//// have to refix them here.. (they get overriden by SetCurrentFireMode above)
+	//for (int i = 0; i < numAccessories; i++)
+	//{
+	//	FixAccessories(GetAccessoryParams(m_accessories[i].pClass), true);
+	//}
 
-	// have to refix them here.. (they get overriden by SetCurrentFireMode above)
-	for (int i = 0; i < numAccessories; i++)
-	{
-		FixAccessories(GetAccessoryParams(m_accessories[i].pClass), true);
-	}
-
-	m_doingMagazineSwap = false;
-	m_isDeselecting = false;
-	m_extendedClipAdded = false;
-	m_enterModifyAction = 0;
+	//m_doingMagazineSwap = false;
+	//m_isDeselecting = false;
+	//m_extendedClipAdded = false;
+	//m_enterModifyAction = 0;
+// BlackHole
 }
 
 //------------------------------------------------------------------------
@@ -1704,40 +1720,42 @@ void CWeapon::PickUp(EntityId picker, bool sound, bool select, bool keepHistory,
 //------------------------------------------------------------------------
 void CWeapon::Drop(float impulseScale, bool selectNext, bool byDeath)
 {
+// BlackHole
 	//Need to check if in game for proper ammo/bonus reseting
-	bool inGame = (!gEnv->IsEditor()) || (gEnv->IsEditing());
-	if (inGame)
-	{
-		CActor* pOwner = GetOwnerActor();
-		IInventory* pOwnerInventory = pOwner ? pOwner->GetInventory() : NULL;
+	//bool inGame = (!gEnv->IsEditor()) || (gEnv->IsEditing());
+	//if (inGame)
+	//{
+	//	CActor* pOwner = GetOwnerActor();
+	//	IInventory* pOwnerInventory = pOwner ? pOwner->GetInventory() : NULL;
 
-		//Note: Net-synch should work, since this code is executed in server and  client,
-		//      and as long as server has the right ammo/bonus count, it should be fine
-		//			This code as well needs to be executed before the owner gets reseted
-		if (pOwnerInventory)
-		{
-			bool ownerIsAI = !pOwner->IsPlayer();
-			if (ownerIsAI)
-			{
-				OnDroppedByAI(pOwnerInventory);
-			}
-			else
-			{
-				OnDroppedByPlayer(pOwnerInventory);
-				m_previousOwnerId = pOwner->GetEntityId();
-			}
-		}
-	}
+	//	//Note: Net-synch should work, since this code is executed in server and  client,
+	//	//      and as long as server has the right ammo/bonus count, it should be fine
+	//	//			This code as well needs to be executed before the owner gets reseted
+	//	if (pOwnerInventory)
+	//	{
+	//		bool ownerIsAI = !pOwner->IsPlayer();
+	//		if (ownerIsAI)
+	//		{
+	//			OnDroppedByAI(pOwnerInventory);
+	//		}
+	//		else
+	//		{
+	//			OnDroppedByPlayer(pOwnerInventory);
+	//			m_previousOwnerId = pOwner->GetEntityId();
+	//		}
+	//	}
+	//}
 
-	DropAmmoCapacity();
+	//DropAmmoCapacity();
 
-	for (size_t i = 0; i < m_firemodes.size(); ++i)
-	{
-		m_firemodes[i]->SetProjectileSpeedScale(1.0f);
-		m_firemodes[i]->StopPendingFire();
-	}
+	//for (size_t i = 0; i < m_firemodes.size(); ++i)
+	//{
+	//	m_firemodes[i]->SetProjectileSpeedScale(1.0f);
+	//	m_firemodes[i]->StopPendingFire();
+	//}
 
-	BaseClass::Drop(impulseScale, selectNext, byDeath);
+	//BaseClass::Drop(impulseScale, selectNext, byDeath);
+// Blackhole
 }
 
 //------------------------------------------------------------------------

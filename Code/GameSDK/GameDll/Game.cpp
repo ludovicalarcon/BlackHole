@@ -2939,7 +2939,6 @@ int CGame::Update(bool haveFocus, unsigned int updateFlags) PREFAST_SUPPRESS_WAR
 #endif 
 
 	m_pFramework->PostUpdate( true, updateFlags );
-	
 	//--- Moved this from the earlier is not paused block to it stop querying joint positions mid-update. 
 	//--- Ideally this should not be a problem & then this can move back where it was.
 	if (m_pFramework->IsGamePaused() == false)

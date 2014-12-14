@@ -112,7 +112,9 @@ void CGameActions::CreateFilterNoMouse()
 	m_pFilterNoMouse->Filter(nextitem);
 	m_pFilterNoMouse->Filter(previtem);
 	m_pFilterNoMouse->Filter(toggle_explosive);
-	m_pFilterNoMouse->Filter(toggle_weapon);
+	m_pFilterNoMouse->Filter(sort1);
+	m_pFilterNoMouse->Filter(sort3);
+	m_pFilterNoMouse->Filter(ulti);
 	m_pFilterNoMouse->Filter(toggle_grenade);
 	m_pFilterNoMouse->Filter(handgrenade);
 	m_pFilterNoMouse->Filter(zoom);
@@ -153,7 +155,7 @@ void CGameActions::CreateFilterNoFireModeSwitch()
 	IActionMapManager* pActionMapMan = g_pGame->GetIGameFramework()->GetIActionMapManager();
 
 	m_pFilterNoFireModeSwitch = pActionMapMan->CreateActionFilter("no_firemodeswitch", eAFT_ActionFail);
-	m_pFilterNoFireModeSwitch->Filter(weapon_change_firemode);
+//	m_pFilterNoFireModeSwitch->Filter(weapon_change_firemode);
 }
 
 void CGameActions::CreateFilterWarningPopup()
@@ -266,7 +268,7 @@ void CGameActions::CreateFilterMPRadio()
 
 	m_pFilterMPRadio = pActionMapMan->CreateActionFilter("mp_radio", eAFT_ActionFail);
 	m_pFilterNoMouse->Filter(toggle_explosive);
-	m_pFilterNoMouse->Filter(toggle_weapon);
+//	m_pFilterNoMouse->Filter(toggle_weapon);
 	m_pFilterNoMouse->Filter(toggle_grenade);
 	m_pFilterMPRadio->Filter(handgrenade);
 	m_pFilterMPRadio->Filter(v_changeseat1);
@@ -411,7 +413,7 @@ void CGameActions::CreateFilterTweakMenu()
 
 	m_pFilterTweakMenu = pActionMapMan->CreateActionFilter("tweak_menu_active", eAFT_ActionFail);
 	m_pFilterTweakMenu->Filter(toggle_explosive);
-	m_pFilterTweakMenu->Filter(toggle_weapon);
+//	m_pFilterTweakMenu->Filter(toggle_weapon);
 	m_pFilterTweakMenu->Filter(toggle_grenade);
 }
 
@@ -668,7 +670,7 @@ void CGameActions::CreateFilterLedgeGrab()
 	m_pFilterLedgeGrab->Filter(nextitem);
 	m_pFilterLedgeGrab->Filter(previtem);
 	m_pFilterLedgeGrab->Filter(toggle_explosive);
-	m_pFilterLedgeGrab->Filter(toggle_weapon);
+//	m_pFilterLedgeGrab->Filter(toggle_weapon);
 	m_pFilterLedgeGrab->Filter(toggle_grenade);
 	m_pFilterLedgeGrab->Filter(handgrenade);
 	m_pFilterLedgeGrab->Filter(zoom);
@@ -704,7 +706,7 @@ void CGameActions::CreateFilterVault()
 	m_pFilterVault->Filter(nextitem);
 	m_pFilterVault->Filter(previtem);
 	m_pFilterVault->Filter(toggle_explosive);
-	m_pFilterVault->Filter(toggle_weapon);
+//	m_pFilterVault->Filter(toggle_weapon);
 	m_pFilterVault->Filter(toggle_grenade);
 	m_pFilterVault->Filter(handgrenade);
 	m_pFilterVault->Filter(zoom);

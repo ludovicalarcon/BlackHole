@@ -102,6 +102,17 @@ CPlayerInput::CPlayerInput( CPlayer * pPlayer ) :
 	m_freeCamCurrentIndex = 0;
 	m_freeCamPlayTimer = 0.f;
 	m_freeCamTotalPlayTime = 0.f;
+	_AttOk = false;
+	_timeS1 = 0.f;
+	_timeS2 = 0.f;
+	_timeS3 = 0.f;
+	_timeUlti = 0.f;
+	_nbSort = 0;
+	_mark = NULL;
+	_s1 = NULL;
+	_s2 = NULL;
+	_s3 = NULL;
+	_s4 = NULL;
 #endif
 
 	m_nextSlideTime = gEnv->pTimer->GetFrameStartTime();
@@ -129,7 +140,7 @@ CPlayerInput::CPlayerInput( CPlayer * pPlayer ) :
 		ADD_HANDLER(attack1_xi, OnActionAttackRightTrigger);
 
 		ADD_HANDLER(special, OnActionSpecial);
-		ADD_HANDLER(weapon_change_firemode, OnActionChangeFireMode);
+//		ADD_HANDLER(weapon_change_firemode, OnActionChangeFireMode);
 
 		ADD_HANDLER(thirdperson, OnActionThirdPerson);
 #ifdef INCLUDE_DEBUG_ACTIONS
@@ -188,12 +199,20 @@ CPlayerInput::CPlayerInput( CPlayer * pPlayer ) :
 		ADD_HANDLER(handgrenade, OnActionSelectNextItem);
 		ADD_HANDLER(toggle_explosive, OnActionSelectNextItem);
 		ADD_HANDLER(toggle_special, OnActionSelectNextItem);
-		ADD_HANDLER(toggle_weapon, OnActionSelectNextItem);
+//		ADD_HANDLER(toggle_weapon, OnActionSelectNextItem);
 		ADD_HANDLER(grenade, OnActionQuickGrenadeThrow);
 		ADD_HANDLER(xi_grenade, OnActionQuickGrenadeThrow);
 		ADD_HANDLER(debug, OnActionSelectNextItem);
-
 		ADD_HANDLER(mouse_wheel, OnActionMouseWheelClick);
+
+// BlackHole
+		ADD_HANDLER(sort1, OnSort1);
+		ADD_HANDLER(sort2, OnSort2);
+		ADD_HANDLER(sort3, OnSort3);
+		ADD_HANDLER(ulti, OnUlti);
+		ADD_HANDLER(attack1, OnActionAttackPrimary);
+		ADD_HANDLER(zoom, OnActionZoom);
+// blackHole
 		
 	#undef ADD_HANDLER
 	}
@@ -1010,6 +1029,24 @@ void CPlayerInput::Update()
 		}
 	}
 
+	// BlackHole
+	switch (_nbSort)
+	{
+	case 1:
+		if (_mark)
+			_mark->SetPos(Vec3(m_pPlayer->GetEntity()->GetPos().x + 7 * m_pPlayer->GetViewRotation().GetColumn1().x, m_pPlayer->GetEntity()->GetPos().y + 7 * m_pPlayer->GetViewRotation().GetColumn1().y, m_pPlayer->GetEntity()->GetPos().z));
+		break;
+	case 2:
+		if (_mark)
+			_mark->SetPos(Vec3(m_pPlayer->GetEntity()->GetPos().x + 10 * m_pPlayer->GetViewRotation().GetColumn1().x, m_pPlayer->GetEntity()->GetPos().y + 10 * m_pPlayer->GetViewRotation().GetColumn1().y, m_pPlayer->GetEntity()->GetPos().z));
+		break;
+	case 3:
+		if (_mark)
+			_mark->SetPos(Vec3(m_pPlayer->GetEntity()->GetPos().x + 5 * m_pPlayer->GetViewRotation().GetColumn1().x, m_pPlayer->GetEntity()->GetPos().y + 5 * m_pPlayer->GetViewRotation().GetColumn1().y, m_pPlayer->GetEntity()->GetPos().z));
+		break;
+	}
+	// BlackHole
+
 	UpdateWeaponToggle();
 	
 	if (m_jumpPressTime > 0.0f)
@@ -1088,6 +1125,17 @@ void CPlayerInput::PostUpdate()
 
 	if (m_actions!=m_lastActions && !m_pPlayer->GetLinkedVehicle())
 		CHANGED_NETWORK_STATE(m_pPlayer,  CPlayer::ASPECT_INPUT_CLIENT );
+	float currentTime = gEnv->pTimer->GetCurrTime();
+	if (currentTime >= _timeS1 + 1 && _s1)
+	{
+		gEnv->pEntitySystem->RemoveEntity(_s1->GetId(), false);
+		_s1 = NULL;
+	}
+	else if (_s2 && currentTime >= _timeS2 + 1)
+	{
+		gEnv->pEntitySystem->RemoveEntity(_s2->GetId(), false);
+		_s2 = NULL;
+	}
 
 #ifndef _RELEASE
 	// Debug Drawing
@@ -2403,10 +2451,10 @@ bool CPlayerInput::OnActionSelectNextItem(EntityId entityId, const ActionId& act
 	if (!IsPlayerOkToAction())
 		return false;
 
-	if (actions.toggle_weapon==actionId)
-	{
-		allowSwitch = AllowToggleWeapon(activationMode, currentTime);
-	}
+	//if (actions.toggle_weapon==actionId)
+	//{
+	//	allowSwitch = AllowToggleWeapon(activationMode, currentTime);
+	//}
 	else if (actions.handgrenade==actionId) // Keyboard only action
 	{
 		const bool bHasGrenades = (!gEnv->bMultiplayer || g_pGameCVars->g_enableMPDoubleTapGrenadeSwitch) && DoubleTapGrenadeAvailable();
@@ -2446,17 +2494,17 @@ bool CPlayerInput::OnActionSelectNextItem(EntityId entityId, const ActionId& act
 
 						currentItemIsGrenade = (categoryType & DoubleTapGrenadeCategories()) != 0;
 
-						if(allowSwitch && actionId == actions.toggle_weapon)
-						{
-							CFireMode* pFiremode = static_cast<CFireMode*>(pWeapon->GetFireMode(pWeapon->GetCurrentFireMode()));
+						//if(allowSwitch && actionId == actions.toggle_weapon)
+						//{
+						//	CFireMode* pFiremode = static_cast<CFireMode*>(pWeapon->GetFireMode(pWeapon->GetCurrentFireMode()));
 
-							if(pFiremode && pFiremode->IsEnabledByAccessory())
-							{
+						//	if(pFiremode && pFiremode->IsEnabledByAccessory())
+						//	{
 
-								pWeapon->StartChangeFireMode();								
-								allowSwitch = false;
-							}
-						}
+						//		pWeapon->StartChangeFireMode();								
+						//		allowSwitch = false;
+						//	}
+						//}
 					}
 				}
 			}
@@ -2491,71 +2539,71 @@ bool CPlayerInput::OnActionSelectNextItem(EntityId entityId, const ActionId& act
 				int secondaryCategory = eICT_Special;
 				ToggleItem(primaryCategory, secondaryCategory, suitVisorOn);
 			}
-			else if (actions.toggle_weapon ==actionId)
-			{
-				float fCurrentTimeStamp = gEnv->pTimer->GetFrameStartTime().GetSeconds();
+			//else if (actions.toggle_weapon ==actionId)
+			//{
+			//	float fCurrentTimeStamp = gEnv->pTimer->GetFrameStartTime().GetSeconds();
 
-				bool bHasGrenades = DoubleTapGrenadeAvailable();
+			//	bool bHasGrenades = DoubleTapGrenadeAvailable();
 
-				float fTapTime = 0.2f;
-				fTapTime = g_pGame->GetUI()->GetCVars()->hud_double_taptime;
+			//	float fTapTime = 0.2f;
+			//	fTapTime = g_pGame->GetUI()->GetCVars()->hud_double_taptime;
 
-				if (currentItemIsGrenade || !bHasGrenades)
-				{
-					bool doubleTapTime = fCurrentTimeStamp - m_fLastWeaponToggleTimeStamp < fTapTime;
-					if(m_fLastWeaponToggleTimeStamp && !doubleTapTime)
-					{
-						SelectNextItem(1, true, eICT_Primary | eICT_Secondary, suitVisorOn);
-						m_fLastWeaponToggleTimeStamp = 0.f;
-					}
-					else
-					{
-						m_fLastWeaponToggleTimeStamp = fCurrentTimeStamp;
-					}
+			//	if (currentItemIsGrenade || !bHasGrenades)
+			//	{
+			//		bool doubleTapTime = fCurrentTimeStamp - m_fLastWeaponToggleTimeStamp < fTapTime;
+			//		if(m_fLastWeaponToggleTimeStamp && !doubleTapTime)
+			//		{
+			//			SelectNextItem(1, true, eICT_Primary | eICT_Secondary, suitVisorOn);
+			//			m_fLastWeaponToggleTimeStamp = 0.f;
+			//		}
+			//		else
+			//		{
+			//			m_fLastWeaponToggleTimeStamp = fCurrentTimeStamp;
+			//		}
 
-					if (fCurrentTimeStamp - m_fLastNoGrenadeTimeStamp < fTapTime && !bHasGrenades && (!gEnv->bMultiplayer || g_pGameCVars->g_enableMPDoubleTapGrenadeSwitch) )
-					{
-						const float displayTime = gEnv->bMultiplayer ? g_pGame->GetUI()->GetCVars()->hud_warningDisplayTimeMP : g_pGame->GetUI()->GetCVars()->hud_warningDisplayTimeSP;
-						SHUDEventWrapper::DisplayInfo( eInfo_Warning, displayTime, "@ui_no_grenades");
-						m_fLastWeaponToggleTimeStamp = 0.f;
-					}
-				}
-				else if (fCurrentTimeStamp - m_fLastWeaponToggleTimeStamp < fTapTime)
-				{
-					SHUDEvent event(eHUDEvent_IsDoubleTapExplosiveSelect);
-					event.AddData(SHUDEventData(true));
-					CHUDEventDispatcher::CallEvent(event);
+			//		if (fCurrentTimeStamp - m_fLastNoGrenadeTimeStamp < fTapTime && !bHasGrenades && (!gEnv->bMultiplayer || g_pGameCVars->g_enableMPDoubleTapGrenadeSwitch) )
+			//		{
+			//			const float displayTime = gEnv->bMultiplayer ? g_pGame->GetUI()->GetCVars()->hud_warningDisplayTimeMP : g_pGame->GetUI()->GetCVars()->hud_warningDisplayTimeSP;
+			//			SHUDEventWrapper::DisplayInfo( eInfo_Warning, displayTime, "@ui_no_grenades");
+			//			m_fLastWeaponToggleTimeStamp = 0.f;
+			//		}
+			//	}
+				//else if (fCurrentTimeStamp - m_fLastWeaponToggleTimeStamp < fTapTime)
+				//{
+				//	SHUDEvent event(eHUDEvent_IsDoubleTapExplosiveSelect);
+				//	event.AddData(SHUDEventData(true));
+				//	CHUDEventDispatcher::CallEvent(event);
 
-					SelectNextItem(1, true, DoubleTapGrenadeCategories(), suitVisorOn);
+				//	SelectNextItem(1, true, DoubleTapGrenadeCategories(), suitVisorOn);
 
-					SActorStats* pActorStats = m_pPlayer->GetActorStats();
-					if(pActorStats)
-					{
-						if (CWeapon* pCurrentItem = static_cast<CWeapon*>(m_pPlayer->GetItem(pActorStats->exchangeItemStats.switchingToItemID)))
-						{
-							pCurrentItem->CancelCharge();
-						}
-					}
-					
-					m_fLastWeaponToggleTimeStamp = 0.f;	
-				}
-				else
-				{
-					CItem *pCurItem = (CItem*)m_pPlayer->GetCurrentItem();
-					const int numOptions = m_pPlayer->GetInventory()->GetSlotCount(IInventory::eInventorySlot_Weapon);
-					if (pCurItem && m_pPlayer->CanSwitchItems() && (numOptions > 1) && pCurItem->CanDeselect())
-					{
-						pCurItem->StartDeselection(false);
-					}
+				//	SActorStats* pActorStats = m_pPlayer->GetActorStats();
+				//	if(pActorStats)
+				//	{
+				//		if (CWeapon* pCurrentItem = static_cast<CWeapon*>(m_pPlayer->GetItem(pActorStats->exchangeItemStats.switchingToItemID)))
+				//		{
+				//			pCurrentItem->CancelCharge();
+				//		}
+				//	}
+				//	
+				//	m_fLastWeaponToggleTimeStamp = 0.f;	
+				//}
+//				else
+//				{
+//					CItem *pCurItem = (CItem*)m_pPlayer->GetCurrentItem();
+//					const int numOptions = m_pPlayer->GetInventory()->GetSlotCount(IInventory::eInventorySlot_Weapon);
+//					if (pCurItem && m_pPlayer->CanSwitchItems() && (numOptions > 1) && pCurItem->CanDeselect())
+//					{
+//						pCurItem->StartDeselection(false);
+//					}
+//
+////					m_fLastWeaponToggleTimeStamp = fCurrentTimeStamp;
+//				}
 
-					m_fLastWeaponToggleTimeStamp = fCurrentTimeStamp;
-				}
-
-				if (!bHasGrenades)
-				{
-					m_fLastNoGrenadeTimeStamp = fCurrentTimeStamp;
-				}
-			}
+				//if (!bHasGrenades)
+				//{
+				//	m_fLastNoGrenadeTimeStamp = fCurrentTimeStamp;
+				//}
+			//}
 			else if (actions.debug==actionId)
 			{
 				if (g_pGame)
@@ -3019,3 +3067,162 @@ void SSerializedPlayerInput::Serialize( TSerialize ser, EEntityAspects aspect )
 	// Always serialise the position
 	SerialiseRelativePosition(ser, position, standingOn);
 }
+
+// BlackHole
+
+bool CPlayerInput::OnSort1(EntityId entityId, const ActionId& actionId, int activationMode, float value)
+{
+	SEntitySpawnParams entitySpawnParams;
+
+	if (_mark)
+		gEnv->pEntitySystem->RemoveEntity(_mark->GetId(), true);
+	entitySpawnParams.pClass = gEnv->pEntitySystem->GetClassRegistry()->GetDefaultClass();
+	entitySpawnParams.sName = "mark";
+	entitySpawnParams.vPosition = Vec3(m_pPlayer->GetEntity()->GetPos().x + 7 * m_pPlayer->GetViewRotation().GetColumn1().x, m_pPlayer->GetEntity()->GetPos().y + 7 * m_pPlayer->GetViewRotation().GetColumn1().y, m_pPlayer->GetEntity()->GetPos().z);
+	entitySpawnParams.vScale(1.5, 1.5, 1.5);
+	entitySpawnParams.id = 5;
+	_mark = gEnv->pEntitySystem->SpawnEntity(entitySpawnParams);
+	if (!_mark)
+		return false;
+	_mark->LoadGeometry(0, "Objects/default/primitive_plane_small.cgf");
+	IMaterial * mat = gEnv->p3DEngine->GetMaterialManager()->LoadMaterial("some_material");
+	_mark->SetMaterial(mat);
+	_AttOk = true;
+	_nbSort = 1;
+	return true;
+}
+
+bool CPlayerInput::OnSort2(EntityId entityId, const ActionId& actionId, int activationMode, float value)
+{
+	SEntitySpawnParams entitySpawnParams;
+
+	if (_mark)
+		gEnv->pEntitySystem->RemoveEntity(_mark->GetId(), true);
+	entitySpawnParams.pClass = gEnv->pEntitySystem->GetClassRegistry()->GetDefaultClass();
+	entitySpawnParams.sName = "mark";
+	entitySpawnParams.vPosition = Vec3(m_pPlayer->GetEntity()->GetPos().x + 10 * m_pPlayer->GetViewRotation().GetColumn1().x, m_pPlayer->GetEntity()->GetPos().y + 10 * m_pPlayer->GetViewRotation().GetColumn1().y, m_pPlayer->GetEntity()->GetPos().z);
+	entitySpawnParams.vScale(1.5, 1.5, 1.5);
+	entitySpawnParams.id = 5;
+	_mark = gEnv->pEntitySystem->SpawnEntity(entitySpawnParams);
+	if (!_mark)
+		return false;
+	_mark->LoadGeometry(0, "Objects/default/primitive_plane_small.cgf");
+	IMaterial * mat = gEnv->p3DEngine->GetMaterialManager()->LoadMaterial("some_material");
+	_mark->SetMaterial(mat);
+	_AttOk = true;
+	_nbSort = 2;
+	return true;
+}
+
+bool CPlayerInput::OnSort3(EntityId entityId, const ActionId& actionId, int activationMode, float value)
+{
+	SEntitySpawnParams entitySpawnParams;
+
+	if (_mark)
+		gEnv->pEntitySystem->RemoveEntity(_mark->GetId(), true);
+	entitySpawnParams.pClass = gEnv->pEntitySystem->GetClassRegistry()->GetDefaultClass();
+	entitySpawnParams.sName = "mark";
+	entitySpawnParams.vPosition = Vec3(m_pPlayer->GetEntity()->GetPos().x + 5 * m_pPlayer->GetViewRotation().GetColumn1().x, m_pPlayer->GetEntity()->GetPos().y + 5 * m_pPlayer->GetViewRotation().GetColumn1().y, m_pPlayer->GetEntity()->GetPos().z);
+	entitySpawnParams.vScale(1.5, 1.5, 1.5);
+	entitySpawnParams.id = 5;
+	_mark = gEnv->pEntitySystem->SpawnEntity(entitySpawnParams);
+	if (!_mark)
+		return false;
+	_mark->LoadGeometry(0, "Objects/default/primitive_plane_small.cgf");
+	IMaterial * mat = gEnv->p3DEngine->GetMaterialManager()->LoadMaterial("some_material");
+	_mark->SetMaterial(mat);
+	_AttOk = true;
+	_nbSort = 3;
+	return true;
+}
+
+bool CPlayerInput::OnUlti(EntityId entityId, const ActionId& actionId, int activationMode, float value)
+{
+	_AttOk = true;
+	_nbSort = 4;
+	return true;
+}
+
+bool CPlayerInput::OnActionAttackPrimary(EntityId actorId, const ActionId& actionId, int activationMode, float value)
+{
+	SEntitySpawnParams entitySpawnParams;
+	SEntityPhysicalizeParams physParams;
+	IEntity *pEntity = NULL;
+	Vec3 playerPos;
+
+	if (_AttOk)
+	{
+		switch (_nbSort)
+		{
+		case 1:
+			entitySpawnParams.pClass = gEnv->pEntitySystem->GetClassRegistry()->GetDefaultClass();
+			entitySpawnParams.sName = "Sort1";
+			entitySpawnParams.vPosition = Vec3(m_pPlayer->GetEntity()->GetPos().x + 7 * m_pPlayer->GetViewRotation().GetColumn1().x, m_pPlayer->GetEntity()->GetPos().y + 7 * m_pPlayer->GetViewRotation().GetColumn1().y, m_pPlayer->GetEntity()->GetPos().z + 3);
+			entitySpawnParams.id = 0;
+			entitySpawnParams.vScale(0.4, 0.4, 0.4);
+			pEntity = gEnv->pEntitySystem->SpawnEntity(entitySpawnParams);
+			if (!pEntity)
+			{
+				_AttOk = false;
+				return false;
+			}
+			pEntity->LoadGeometry(0, "Objects/default/primitive_sphere.cgf");
+			physParams.type = PE_RIGID;
+			physParams.mass = 70;
+			pEntity->Physicalize(physParams);
+			if (_mark)
+				gEnv->pEntitySystem->RemoveEntity(_mark->GetId(), true);
+			_mark = NULL;
+			_timeS1 = gEnv->pTimer->GetCurrTime();
+			_s1 = pEntity;
+			break;
+		case 2:
+			entitySpawnParams.pClass = gEnv->pEntitySystem->GetClassRegistry()->GetDefaultClass();
+			entitySpawnParams.sName = "Sort2";
+			entitySpawnParams.vPosition = Vec3(m_pPlayer->GetEntity()->GetPos().x + 10 * m_pPlayer->GetViewRotation().GetColumn1().x, m_pPlayer->GetEntity()->GetPos().y + 10 * m_pPlayer->GetViewRotation().GetColumn1().y, m_pPlayer->GetEntity()->GetPos().z + 3);
+			entitySpawnParams.id = 0;
+			entitySpawnParams.vScale(0.5, 0.5, 0.5);
+			pEntity = gEnv->pEntitySystem->SpawnEntity(entitySpawnParams);
+			if (!pEntity)
+			{
+				_AttOk = false;
+				return false;
+			}
+			pEntity->LoadGeometry(0, "Objects/default/primitive_pyramid.cgf");
+			physParams.type = PE_RIGID;
+			physParams.mass = 70;
+			pEntity->Physicalize(physParams);
+			if (_mark)
+				gEnv->pEntitySystem->RemoveEntity(_mark->GetId(), true);
+			_mark = NULL;
+			_timeS2 = gEnv->pTimer->GetCurrTime();
+			_s2 = pEntity;
+			break;
+		case 3:
+			m_pPlayer->GetEntity()->SetPos(Vec3(m_pPlayer->GetEntity()->GetPos().x + 5 * m_pPlayer->GetViewRotation().GetColumn1().x, m_pPlayer->GetEntity()->GetPos().y + 5 * m_pPlayer->GetViewRotation().GetColumn1().y, m_pPlayer->GetEntity()->GetPos().z));
+			if (_mark)
+				gEnv->pEntitySystem->RemoveEntity(_mark->GetId(), true);
+			_mark = NULL;
+			break;
+		case 4:
+			break;
+		default:
+			return false;
+			break;
+		}
+	}
+	_AttOk = false;
+	return true;
+}
+
+bool CPlayerInput::OnActionZoom(EntityId actorId, const ActionId& actionId, int activationMode, float value)
+{
+	_AttOk = false;
+	_nbSort = 0;
+	if (_mark)
+		gEnv->pEntitySystem->RemoveEntity(_mark->GetId(), true);
+	_mark = NULL;
+	return true;
+}
+
+// BlackHole

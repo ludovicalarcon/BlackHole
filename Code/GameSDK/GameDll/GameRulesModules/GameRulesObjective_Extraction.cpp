@@ -2665,10 +2665,10 @@ void CGameRulesObjective_Extraction::OnAction(const ActionId& action, int activa
 						}
 					}
 				}
-				else if ((action == g_pGame->Actions().toggle_weapon) && (activationMode == eAAM_OnPress))
-				{
-					dropItem = (GetPickupForCarrierEntityId(clientEid) != NULL);
-				}
+				//else if ((action == g_pGame->Actions().toggle_weapon) && (activationMode == eAAM_OnPress))
+				//{
+				//	dropItem = (GetPickupForCarrierEntityId(clientEid) != NULL);
+				//}
 
 				if (dropItem)
 				{

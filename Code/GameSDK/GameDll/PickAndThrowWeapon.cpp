@@ -513,7 +513,7 @@ CPickAndThrowWeapon::CPickAndThrowWeapon()
 	{
 		pickAndThrowActionHandler.AddHandler(g_pGame->Actions().use, &CPickAndThrowWeapon::OnActionUse);
 		pickAndThrowActionHandler.AddHandler(g_pGame->Actions().drop, &CPickAndThrowWeapon::OnActionDrop);
-		pickAndThrowActionHandler.AddHandler(g_pGame->Actions().toggle_weapon, &CPickAndThrowWeapon::OnActionDrop);
+//		pickAndThrowActionHandler.AddHandler(g_pGame->Actions().toggle_weapon, &CPickAndThrowWeapon::OnActionDrop);
 		pickAndThrowActionHandler.AddHandler(g_pGame->Actions().nextitem, &CPickAndThrowWeapon::OnActionDrop);
 		pickAndThrowActionHandler.AddHandler(g_pGame->Actions().previtem, &CPickAndThrowWeapon::OnActionDrop);
 

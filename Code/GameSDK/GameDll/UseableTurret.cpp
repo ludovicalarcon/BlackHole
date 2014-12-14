@@ -19,7 +19,7 @@ namespace
 		const ActionId* actionsToFilter[] =
 		{
 			&actions.attack2_xi,
-			&actions.weapon_change_firemode,
+//			&actions.weapon_change_firemode,
 			&actions.use,
 			&actions.heavyweaponremove,
 			&actions.special,
@@ -55,9 +55,9 @@ void CUseableTurret::OnAction(EntityId actorId, const ActionId& actionId, int ac
 		BaseClass::OnAction(actorId, actionId, activationMode, value);
 
 	const CGameActions& actions = g_pGame->Actions();
-	if (actionId == actions.toggle_weapon && activationMode == eAAM_OnPress)
-		SetFiringMode(GetNextMode());
-	else if (actionId == actions.previtem && activationMode == eAAM_OnPress)
+	//if (actionId == actions.toggle_weapon && activationMode == eAAM_OnPress)
+	//	SetFiringMode(GetNextMode());
+	if (actionId == actions.previtem && activationMode == eAAM_OnPress)
 		SetFiringMode(ECUTFM_Rockets);
 	else if (actionId == actions.nextitem && activationMode == eAAM_OnPress)
 		SetFiringMode(ECUTFM_Rapid);

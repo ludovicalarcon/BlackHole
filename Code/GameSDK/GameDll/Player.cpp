@@ -815,18 +815,18 @@ bool CPlayer::Init(IGameObject * pGameObject)
 	else
 		StateMachineHandleEventMovement( PLAYER_EVENT_INTRO_FINISHED );
 	// BlackHole
-	SmartScriptTable Properties;
+	//SmartScriptTable Properties;
 
-	if (this->GetEntity() && this->GetEntity()->GetScriptTable())
-	{
-		this->GetEntity()->GetScriptTable()->GetValue("Properties", Properties);
-		CScriptSetGetChain params(Properties);
+	//if (this->GetEntity() && this->GetEntity()->GetScriptTable())
+	//{
+	//	this->GetEntity()->GetScriptTable()->GetValue("Properties", Properties);
+	//	CScriptSetGetChain params(Properties);
 
-		params.SetValue("fileModel", "D:/Programming/BlackHole/GameSDK/objects/characters/animals/reptiles/turtle/red_eared_slider.cdf");
-		params.SetValue("shadowFileModel", "D:/Programming/BlackHole/GameSDK/objects/characters/animals/reptiles/turtle/red_eared_slider.cdf");
-		params.SetValue("clientFileModel", "D:/Programming/BlackHole/GameSDK/objects/characters/animals/reptiles/turtle/red_eared_slider.cdf");
-		Script::CallMethod(this->GetEntity()->GetScriptTable(), "SetActorModel", this->IsClient());
-	}
+	//	params.SetValue("fileModel", "D:/Programming/BlackHole/GameSDK/objects/characters/animals/reptiles/turtle/red_eared_slider.cdf");
+	//	params.SetValue("shadowFileModel", "D:/Programming/BlackHole/GameSDK/objects/characters/animals/reptiles/turtle/red_eared_slider.cdf");
+	//	params.SetValue("clientFileModel", "D:/Programming/BlackHole/GameSDK/objects/characters/animals/reptiles/turtle/red_eared_slider.cdf");
+	//	Script::CallMethod(this->GetEntity()->GetScriptTable(), "SetActorModel", this->IsClient());
+	//}
 	// BlackHole
 	return true;
 }
@@ -8516,6 +8516,7 @@ void CPlayer::SetupAimIKProperties()
 void CPlayer::Reset( bool toGame )
 {
 	CActor::Reset(toGame);
+	m_pPlayerInput->setMarkNull();
 
 	StateMachineResetMovement();
 	SelectMovementHierarchy();

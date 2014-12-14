@@ -126,6 +126,9 @@ struct IPlayerInput
 	virtual void SerializeSaveGame( TSerialize ser ) = 0;
 
 	virtual void GetMemoryUsage(ICrySizer *pSizer ) const =0;
+	// BlackHole
+	virtual void setMarkNull() = 0;
+	// BlackHole
 };
 
 #endif

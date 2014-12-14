@@ -119,7 +119,9 @@ public:
 	bool CallAllCancelHandlers();
 
 	ILINE bool IsNearLookAtTarget() const { return m_isNearTheLookAtTarget; }
-
+	// BlackHole
+	void	setMarkNull() { _mark = NULL; }
+	// BlackHole
 private:
 	void HandleMovingDetachedCamera(const Ang3 &deltaRotation, const Vec3 &m_deltaMovement);
 	EStance FigureOutStance();
@@ -163,7 +165,14 @@ private:
 	bool OnActionChangeFireMode(EntityId entityId, const ActionId& actionId, int activationMode, float value);
 	bool OnActionMouseWheelClick(EntityId entityId, const ActionId& actionId, int activationMode, float value);
 	bool OnActionToggleVision(EntityId entityId, const ActionId& actionId, int activationMode, float value);
-
+// Blackhole
+	bool OnSort1(EntityId entityId, const ActionId& actionId, int activationMode, float value);
+	bool OnSort2(EntityId entityId, const ActionId& actionId, int activationMode, float value);
+	bool OnSort3(EntityId entityId, const ActionId& actionId, int activationMode, float value);
+	bool OnUlti(EntityId entityId, const ActionId& actionId, int activationMode, float value);
+	bool OnActionAttackPrimary(EntityId actorId, const ActionId& actionId, int activationMode, float value);
+	bool OnActionZoom(EntityId actorId, const ActionId& actionId, int activationMode, float value);
+// BlackHole
 	bool OnActionMindBattle(EntityId entityId, const ActionId& actionId, int activationMode, float value);
 
 	// Cheats
@@ -298,6 +307,20 @@ private:
 	bool m_openingVisor;
 	bool m_playerInVehicleAtFrameStart;
 
+	// BlackHole
+	bool	_AttOk;
+	float	_timeS1;
+	float	_timeS2;
+	float	_timeS3;
+	float	_timeUlti;
+	int		_nbSort;
+	IEntity *_mark;
+	IEntity *_s1;
+	IEntity *_s2;
+	IEntity *_s3;
+	IEntity *_s4;
+	// BlackHole
+
 	enum E_AutoPickupModeEnabled
 	{
 		EAPM_None = 0,
@@ -362,7 +385,9 @@ public:
 		eMBM_Left			= (1 << 2),
 		eMBM_Right		= (1 << 3)
 	};
-
+	// BlackHole
+	void	setMarkNull() {}
+	// BlackHole
 	CAIInput( CPlayer * pPlayer );
 	~CAIInput();
 

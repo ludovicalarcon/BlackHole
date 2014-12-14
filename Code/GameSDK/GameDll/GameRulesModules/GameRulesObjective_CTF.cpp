@@ -571,7 +571,8 @@ void CGameRulesObjective_CTF::OnRoundAboutToStart()
 void CGameRulesObjective_CTF::OnAction(const ActionId &action, int activationMode, float value)
 {
 	bool bIsUseButton    = (action == g_pGame->Actions().use);
-	bool bIsSwitchWeapon = (action == g_pGame->Actions().toggle_weapon);
+	bool bIsSwitchWeapon = false;
+	//(action == g_pGame->Actions().toggle_weapon);
 
 	if (bIsUseButton || bIsSwitchWeapon)
 	{

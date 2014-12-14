@@ -23,6 +23,9 @@ enum EDefaultableBool
 class CDedicatedInput : public IPlayerInput
 {
 public:
+	// BlackHole
+	void	setMarkNull() {}
+	// BlackHole
 	CDedicatedInput(CPlayer* pPlayer);
 	virtual void PreUpdate();
 	virtual void Update();
