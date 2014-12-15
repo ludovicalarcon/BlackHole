@@ -309,11 +309,16 @@ private:
 
 	// BlackHole
 	bool	_AttOk;
+	bool	_delay;
 	float	_timeS1;
 	float	_timeS2;
 	float	_timeS3;
 	float	_timeUlti;
 	int		_nbSort;
+	float	_delayS1;
+	float	_delayS2;
+	float	_delayS3;
+	float	_delayS4;
 	IEntity *_mark;
 	IEntity *_s1;
 	IEntity *_s2;

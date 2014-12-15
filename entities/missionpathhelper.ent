@@ -1,4 +1,0 @@
-<Entity
-	Name="MissionPathHelper"
-	Script="Scripts/Entities/Others/MissionPathHelper.lua"
-/>

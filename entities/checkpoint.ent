@@ -1,4 +1,0 @@
-<Entity
- Name="Checkpoint" 
- Script="Scripts/Entities/Others/Checkpoint.lua"
-/>

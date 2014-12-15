@@ -1,0 +1,127 @@
+<BehaviorTree>
+
+	<Variables>
+		<Variable name="ExecuteSequence" />
+		<Variable name="ExecuteInterruptibleSequence" />
+		<Variable name="HasTarget" />
+	</Variables>
+
+	<SignalVariables>
+		<Signal name="OnNewAttentionTarget" variable="HasTarget" value="true" />
+		<Signal name="OnNoTargetVisible" variable="HasTarget" value="false" />
+		<Signal name="OnNoTarget" variable="HasTarget" value="false" />
+		<Signal name="OnTargetFleeing" variable="HasTarget" value="false" />
+		<Signal name="OnLostSightOfTarget" variable="HasTarget" value="false" />
+	</SignalVariables>
+	
+	<Timestamps>
+	</Timestamps>
+	
+	<Root>
+	
+		<Priority>
+		
+			<Case condition="ExecuteSequence" _startLog="Executing scripted uninterruptible sequence" _endLog="Ended execution of scripted uninterruptible sequence">				
+				<Sequence>
+					<LuaBehavior name="ExecuteSequence" />
+				</Sequence>
+			</Case>
+			
+			<Case>
+				<!-- This is the regular AI behavior -->
+				<StateMachine>
+				
+					<State name="Idle">
+						<Transitions>
+							<Transition to="Hostile" onEvent="OnNewAttentionTarget" />
+						</Transitions>
+						<BehaviorTree>
+							
+							<Priority>
+								<Case condition="ExecuteInterruptibleSequence" _startLog="Executing scripted interruptible sequence">
+									<Sequence>
+										<LuaBehavior name="ExecuteInterruptibleSequence" />
+									</Sequence>
+								</Case>
+								
+								<Case _startLog="Normal Idle behavior">
+									<Sequence>
+										<ExecuteLua code="entity:SelectPrimaryWeapon()"/>
+										<Animate name="AI_SearchLookAround" />
+										<Wait duration="9999" />
+										<Halt />
+									</Sequence>
+								</Case>
+							</Priority>
+							
+						</BehaviorTree>
+					</State>
+
+					<State name="Hostile">
+
+						<BehaviorTree>
+
+							<Sequence>
+
+								<SetAlertness value="2" />
+
+								<StateMachine>
+
+									<State name="FindCover">
+										<Transitions>
+											<Transition to="Combat" onEvent="GoToCombat" />
+										</Transitions>
+
+										<BehaviorTree  _startLog="Find Cover behavior">
+											<Sequence>
+												<Communicate name="TargetSpottedWhileSearching" channel="Reaction" expirity="1.0" waitUntilFinished="0" />
+												<ExecuteLua code="entity:SelectPrimaryWeapon()"/>
+												<ExecuteLua code="AI.SetFireMode(entity.id, FIREMODE_BURST)" />
+												<SuppressFailure>
+													<Sequence>
+														<QueryTPS name="FindCloseCoverWithShootingPostureForHuman" register="Cover" />
+														<Move to="Cover" speed="Run" stance="Alerted" fireMode="BurstWhileMoving" avoidDangers="1"/>
+													</Sequence>
+												</SuppressFailure>
+												<SendTransitionSignal name="GoToCombat" />
+											</Sequence>
+										</BehaviorTree>
+									</State>
+
+									<State name="Combat">
+										<Transitions>
+											<Transition to="FindCover" onEvent="GoToFindCover" />
+										</Transitions>
+
+										<BehaviorTree  _startLog="Combat behavior">
+											<Sequence>
+												<Log message="In cover, firing target" />
+												<Loop>
+													<Sequence>
+														<Selector>
+															<ShootFromCover duration="2"  fireMode="Burst"/>
+															<SendTransitionSignal name="GoToFindCover" />
+														</Selector>
+													</Sequence>
+												</Loop>
+												<Halt />
+											</Sequence>
+										</BehaviorTree>
+									</State>
+
+								</StateMachine>
+
+							</Sequence>
+
+						</BehaviorTree>
+
+					</State>
+
+				</StateMachine>
+			
+			</Case>
+		
+		</Priority>
+	
+	</Root>
+</BehaviorTree>

@@ -1,7 +1,0 @@
-<Communications>
-	<Variables>
-		<!-- These are system variables. DO NOT REMOVE THEM OR ADD NEW -->
-		<Variable name="TargetIsAbove" />
-		<Variable name="TargetIsBelow" />
-	</Variables>
-</Communications>

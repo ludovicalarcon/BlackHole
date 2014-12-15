@@ -1,5 +1,0 @@
-<Entity
- Name="LightShape"
- Script="Scripts/Entities/Lights/LightShape.lua"
- Invisible="1"
-/>

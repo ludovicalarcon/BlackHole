@@ -1,0 +1,4 @@
+<Entity
+ Name="MultipleTrigger" 
+ Script="Scripts/Entities/Triggers/MultipleTrigger.lua"
+/>
