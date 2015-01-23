@@ -45,7 +45,9 @@ DECL_ACTION(modify)
 DECL_ACTION(nextitem)
 DECL_ACTION(previtem)
 DECL_ACTION(toggle_explosive)
+// BlackHole
 DECL_ACTION(sort1)
+// blackHole
 DECL_ACTION(toggle_special)
 DECL_ACTION(drop)
 DECL_ACTION(toggle_grenade)
@@ -57,7 +59,9 @@ DECL_ACTION(toggle_flashlight)
 DECL_ACTION(debug)
 DECL_ACTION(zoom)
 DECL_ACTION(firemode)
+// BlackHole
 DECL_ACTION(sort2)
+// BlackHole
 DECL_ACTION(binoculars)
 DECL_ACTION(objectives)
 DECL_ACTION(grenade)
@@ -270,5 +274,7 @@ DECL_ACTION(mannequin_debugai)
 
 DECL_ACTION(ai_debugCenterViewAgent)
 
+// BlackHole
 DECL_ACTION(sort3)
 DECL_ACTION(ulti)
+// BlackHole

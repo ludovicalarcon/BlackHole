@@ -109,9 +109,6 @@ class CNetPlayerInput : public IPlayerInput
 {
 public:
 	CNetPlayerInput( CPlayer * pPlayer );
-	// BlackHole
-	void	setMarkNull() {}
-	// BlackHole
 	// IPlayerInput
 	virtual void PreUpdate();
 	virtual void Update();

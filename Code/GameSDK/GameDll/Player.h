@@ -45,7 +45,10 @@
 #include "IPlayerProfiles.h"
 #include "ICameraMode.h"
 
-
+// BlackHole
+#include "Spell.h"
+//class Spell;
+// BlackHole
 struct IPlayerInput;
 class CVehicleClient;
 struct IInteractor;
@@ -1448,6 +1451,9 @@ private:
 	void UpdateAIAnimationState(const SActorFrameMovementParams &frameMovementParams, CWeapon* pWeapon, ICharacterInstance* pICharInst, IActionController* pActionController, IMannequin& mannequinSys);
 	void UpdateAITagsFromAG(CTagState* pTagState, const struct SMannequinAIStateParams* pParams);
 
+	// BlackHole
+	Spell	*getSpell() const { return _spell; }
+	// BlackHole
 protected:
 	//set the character's model names based on race and team
 	void SetMultiplayerModelName();
@@ -1602,6 +1608,9 @@ protected:
 
 	CLocalPlayerComponent * m_pPlayerTypeComponent;
 
+	// BlackHole
+	Spell					*_spell;
+	// BlackHole
 private:
 
 	void StatsPopulateAngVelAndMass( const IPhysicalEntity& physEnt );

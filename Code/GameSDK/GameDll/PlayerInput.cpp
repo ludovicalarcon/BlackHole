@@ -102,22 +102,6 @@ CPlayerInput::CPlayerInput( CPlayer * pPlayer ) :
 	m_freeCamCurrentIndex = 0;
 	m_freeCamPlayTimer = 0.f;
 	m_freeCamTotalPlayTime = 0.f;
-	_AttOk = false;
-	_timeS1 = 0.f;
-	_timeS2 = 0.f;
-	_timeS3 = 0.f;
-	_timeUlti = 0.f;
-	_nbSort = 0;
-	_mark = NULL;
-	_delayS1 = 0.f;
-	_delayS2 = 0.f;
-	_delayS3 = 0.f;
-	_delayS4 = 0.f;
-	_delay = true;
-	_s1 = NULL;
-	_s2 = NULL;
-	_s3 = NULL;
-	_s4 = NULL;
 #endif
 
 	m_nextSlideTime = gEnv->pTimer->GetFrameStartTime();
@@ -145,8 +129,9 @@ CPlayerInput::CPlayerInput( CPlayer * pPlayer ) :
 		ADD_HANDLER(attack1_xi, OnActionAttackRightTrigger);
 
 		ADD_HANDLER(special, OnActionSpecial);
+// BlackHole
 //		ADD_HANDLER(weapon_change_firemode, OnActionChangeFireMode);
-
+// BlackHole
 		ADD_HANDLER(thirdperson, OnActionThirdPerson);
 #ifdef INCLUDE_DEBUG_ACTIONS
 		ADD_HANDLER(flymode, OnActionFlyMode);
@@ -204,7 +189,9 @@ CPlayerInput::CPlayerInput( CPlayer * pPlayer ) :
 		ADD_HANDLER(handgrenade, OnActionSelectNextItem);
 		ADD_HANDLER(toggle_explosive, OnActionSelectNextItem);
 		ADD_HANDLER(toggle_special, OnActionSelectNextItem);
+// BlackHole
 //		ADD_HANDLER(toggle_weapon, OnActionSelectNextItem);
+// BlackHole
 		ADD_HANDLER(grenade, OnActionQuickGrenadeThrow);
 		ADD_HANDLER(xi_grenade, OnActionQuickGrenadeThrow);
 		ADD_HANDLER(debug, OnActionSelectNextItem);
@@ -260,6 +247,7 @@ void CPlayerInput::Reset()
   m_moveOverlay.Reset();
 
  	m_standingOn = 0;
+
 	CHANGED_NETWORK_STATE(m_pPlayer,  CPlayer::ASPECT_INPUT_CLIENT_AUGMENTED);
 }
 
@@ -1035,25 +1023,7 @@ void CPlayerInput::Update()
 	}
 
 	// BlackHole
-	switch (_nbSort)
-	{
-	case 1:
-		if (_mark)
-			_mark->SetPos(Vec3(m_pPlayer->GetEntity()->GetPos().x + 7 * m_pPlayer->GetViewRotation().GetColumn1().x, m_pPlayer->GetEntity()->GetPos().y + 7 * m_pPlayer->GetViewRotation().GetColumn1().y, m_pPlayer->GetEntity()->GetPos().z));
-		break;
-	case 2:
-		if (_mark)
-			_mark->SetPos(Vec3(m_pPlayer->GetEntity()->GetPos().x + 10 * m_pPlayer->GetViewRotation().GetColumn1().x, m_pPlayer->GetEntity()->GetPos().y + 10 * m_pPlayer->GetViewRotation().GetColumn1().y, m_pPlayer->GetEntity()->GetPos().z));
-		break;
-	case 3:
-		if (_mark)
-			_mark->SetPos(Vec3(m_pPlayer->GetEntity()->GetPos().x + 5 * m_pPlayer->GetViewRotation().GetColumn1().x, m_pPlayer->GetEntity()->GetPos().y + 5 * m_pPlayer->GetViewRotation().GetColumn1().y, m_pPlayer->GetEntity()->GetPos().z));
-		break;
-	case 4:
-		if (_mark)
-			_mark->SetPos(Vec3(m_pPlayer->GetEntity()->GetPos().x + 9 * m_pPlayer->GetViewRotation().GetColumn1().x, m_pPlayer->GetEntity()->GetPos().y + 9 * m_pPlayer->GetViewRotation().GetColumn1().y, m_pPlayer->GetEntity()->GetPos().z));
-		break;
-	}
+	m_pPlayer->getSpell()->update();
 	// BlackHole
 
 	UpdateWeaponToggle();
@@ -1134,23 +1104,7 @@ void CPlayerInput::PostUpdate()
 
 	if (m_actions!=m_lastActions && !m_pPlayer->GetLinkedVehicle())
 		CHANGED_NETWORK_STATE(m_pPlayer,  CPlayer::ASPECT_INPUT_CLIENT );
-	float currentTime = gEnv->pTimer->GetCurrTime();
-	if (currentTime >= _timeS1 + 1 && _s1)
-	{
-		gEnv->pEntitySystem->RemoveEntity(_s1->GetId(), false);
-		_s1 = NULL;
-	}
-	else if (_s2 && currentTime >= _timeS2 + 1)
-	{
-		gEnv->pEntitySystem->RemoveEntity(_s2->GetId(), false);
-		_s2 = NULL;
-	}
-	else if (_s4 && currentTime >= _timeUlti + 1.5)
-	{
-		gEnv->pEntitySystem->RemoveEntity(_s4->GetId(), false);
-		_s4 = NULL;
-	}
-
+	m_pPlayer->getSpell()->dellSpell();
 
 #ifndef _RELEASE
 	// Debug Drawing
@@ -3087,216 +3041,32 @@ void SSerializedPlayerInput::Serialize( TSerialize ser, EEntityAspects aspect )
 
 bool CPlayerInput::OnSort1(EntityId entityId, const ActionId& actionId, int activationMode, float value)
 {
-	SEntitySpawnParams entitySpawnParams;
-
-	if (_delayS1 > 0 && gEnv->pTimer->GetCurrTime() <= _delayS1 + 2)
-		return false;
-	if (_mark)
-		gEnv->pEntitySystem->RemoveEntity(_mark->GetId(), true);
-	entitySpawnParams.pClass = gEnv->pEntitySystem->GetClassRegistry()->GetDefaultClass();
-	entitySpawnParams.sName = "mark";
-	entitySpawnParams.vPosition = Vec3(m_pPlayer->GetEntity()->GetPos().x + 7 * m_pPlayer->GetViewRotation().GetColumn1().x, m_pPlayer->GetEntity()->GetPos().y + 7 * m_pPlayer->GetViewRotation().GetColumn1().y, m_pPlayer->GetEntity()->GetPos().z);
-	entitySpawnParams.vScale(1.5, 1.5, 1.5);
-	entitySpawnParams.id = 5;
-	_mark = gEnv->pEntitySystem->SpawnEntity(entitySpawnParams);
-	if (!_mark)
-		return false;
-	_mark->LoadGeometry(0, "Objects/default/primitive_plane_small.cgf");
-	IMaterial * mat = gEnv->p3DEngine->GetMaterialManager()->LoadMaterial("some_material");
-	_mark->SetMaterial(mat);
-	_AttOk = true;
-	_nbSort = 1;
-	return true;
+	return m_pPlayer->getSpell()->OnSpell1();
 }
 
 bool CPlayerInput::OnSort2(EntityId entityId, const ActionId& actionId, int activationMode, float value)
 {
-	SEntitySpawnParams entitySpawnParams;
-
-	if (_delayS2 > 0 && gEnv->pTimer->GetCurrTime() <= _delayS2 + 2)
-		return false;
-	if (_mark)
-		gEnv->pEntitySystem->RemoveEntity(_mark->GetId(), true);
-	entitySpawnParams.pClass = gEnv->pEntitySystem->GetClassRegistry()->GetDefaultClass();
-	entitySpawnParams.sName = "mark";
-	entitySpawnParams.vPosition = Vec3(m_pPlayer->GetEntity()->GetPos().x + 10 * m_pPlayer->GetViewRotation().GetColumn1().x, m_pPlayer->GetEntity()->GetPos().y + 10 * m_pPlayer->GetViewRotation().GetColumn1().y, m_pPlayer->GetEntity()->GetPos().z);
-	entitySpawnParams.vScale(1.5, 1.5, 1.5);
-	entitySpawnParams.id = 5;
-	_mark = gEnv->pEntitySystem->SpawnEntity(entitySpawnParams);
-	if (!_mark)
-		return false;
-	_mark->LoadGeometry(0, "Objects/default/primitive_plane_small.cgf");
-	IMaterial * mat = gEnv->p3DEngine->GetMaterialManager()->LoadMaterial("some_material");
-	_mark->SetMaterial(mat);
-	_AttOk = true;
-	_nbSort = 2;
-	return true;
+	return m_pPlayer->getSpell()->OnSpell2();
 }
 
 bool CPlayerInput::OnSort3(EntityId entityId, const ActionId& actionId, int activationMode, float value)
 {
-	SEntitySpawnParams entitySpawnParams;
-
-	if (_delayS3 > 0 && gEnv->pTimer->GetCurrTime() <= _delayS3 + 2)
-		return false;
-	if (_mark)
-		gEnv->pEntitySystem->RemoveEntity(_mark->GetId(), true);
-	entitySpawnParams.pClass = gEnv->pEntitySystem->GetClassRegistry()->GetDefaultClass();
-	entitySpawnParams.sName = "mark";
-	entitySpawnParams.vPosition = Vec3(m_pPlayer->GetEntity()->GetPos().x + 5 * m_pPlayer->GetViewRotation().GetColumn1().x, m_pPlayer->GetEntity()->GetPos().y + 5 * m_pPlayer->GetViewRotation().GetColumn1().y, m_pPlayer->GetEntity()->GetPos().z);
-	entitySpawnParams.vScale(1.5, 1.5, 1.5);
-	entitySpawnParams.id = 5;
-	_mark = gEnv->pEntitySystem->SpawnEntity(entitySpawnParams);
-	if (!_mark)
-		return false;
-	_mark->LoadGeometry(0, "Objects/default/primitive_plane_small.cgf");
-	IMaterial * mat = gEnv->p3DEngine->GetMaterialManager()->LoadMaterial("some_material");
-	_mark->SetMaterial(mat);
-	_AttOk = true;
-	_nbSort = 3;
-	return true;
+	return m_pPlayer->getSpell()->OnSpell3();
 }
 
 bool CPlayerInput::OnUlti(EntityId entityId, const ActionId& actionId, int activationMode, float value)
 {
-	SEntitySpawnParams entitySpawnParams;
-
-	if (_delayS4 > 0 && gEnv->pTimer->GetCurrTime() <= _delayS4 + 3)
-		return false;
-	if (_mark)
-		gEnv->pEntitySystem->RemoveEntity(_mark->GetId(), true);
-	entitySpawnParams.pClass = gEnv->pEntitySystem->GetClassRegistry()->GetDefaultClass();
-	entitySpawnParams.sName = "mark";
-	entitySpawnParams.vPosition = Vec3(m_pPlayer->GetEntity()->GetPos().x + 9 * m_pPlayer->GetViewRotation().GetColumn1().x, m_pPlayer->GetEntity()->GetPos().y + 9 * m_pPlayer->GetViewRotation().GetColumn1().y, m_pPlayer->GetEntity()->GetPos().z);
-	entitySpawnParams.vScale(2.5, 2.5, 2.5);
-	entitySpawnParams.id = 5;
-	_mark = gEnv->pEntitySystem->SpawnEntity(entitySpawnParams);
-	if (!_mark)
-		return false;
-	_mark->LoadGeometry(0, "Objects/default/primitive_plane_small.cgf");
-	IMaterial * mat = gEnv->p3DEngine->GetMaterialManager()->LoadMaterial("some_material");
-	_mark->SetMaterial(mat);
-	_AttOk = true;
-	_nbSort = 4;
-	return true;
+	return m_pPlayer->getSpell()->OnSpellUlt();
 }
 
 bool CPlayerInput::OnActionAttackPrimary(EntityId actorId, const ActionId& actionId, int activationMode, float value)
 {
-	SEntitySpawnParams entitySpawnParams;
-	SEntityPhysicalizeParams physParams;
-	IEntity *pEntity = NULL;
-	Vec3 playerPos;
-
-	if (_AttOk)
-	{
-		switch (_nbSort)
-		{
-		case 1:
-			if (_delayS1 > 0 && gEnv->pTimer->GetCurrTime() <= _delayS1 + 2)
-				return false;
-			entitySpawnParams.pClass = gEnv->pEntitySystem->GetClassRegistry()->GetDefaultClass();
-			entitySpawnParams.sName = "Sort1";
-			entitySpawnParams.vPosition = Vec3(m_pPlayer->GetEntity()->GetPos().x + 7 * m_pPlayer->GetViewRotation().GetColumn1().x, m_pPlayer->GetEntity()->GetPos().y + 7 * m_pPlayer->GetViewRotation().GetColumn1().y, m_pPlayer->GetEntity()->GetPos().z + 3);
-			entitySpawnParams.id = 0;
-			entitySpawnParams.vScale(0.4, 0.4, 0.4);
-			pEntity = gEnv->pEntitySystem->SpawnEntity(entitySpawnParams);
-			if (!pEntity)
-			{
-				_AttOk = false;
-				return false;
-			}
-			pEntity->LoadGeometry(0, "Objects/default/primitive_sphere.cgf");
-			physParams.type = PE_RIGID;
-			physParams.mass = 70;
-			pEntity->Physicalize(physParams);
-			if (_mark)
-				gEnv->pEntitySystem->RemoveEntity(_mark->GetId(), true);
-			_mark = NULL;
-			_timeS1 = gEnv->pTimer->GetCurrTime();
-			_s1 = pEntity;
-			_delayS1 = gEnv->pTimer->GetCurrTime();
-			_delay = false;
-			break;
-		case 2:
-			if (_delayS2 > 0 && gEnv->pTimer->GetCurrTime() <= _delayS2 + 2)
-				return false;
-			entitySpawnParams.pClass = gEnv->pEntitySystem->GetClassRegistry()->GetDefaultClass();
-			entitySpawnParams.sName = "Sort2";
-			entitySpawnParams.vPosition = Vec3(m_pPlayer->GetEntity()->GetPos().x + 10 * m_pPlayer->GetViewRotation().GetColumn1().x, m_pPlayer->GetEntity()->GetPos().y + 10 * m_pPlayer->GetViewRotation().GetColumn1().y, m_pPlayer->GetEntity()->GetPos().z + 3);
-			entitySpawnParams.id = 0;
-			entitySpawnParams.vScale(0.5, 0.5, 0.5);
-			pEntity = gEnv->pEntitySystem->SpawnEntity(entitySpawnParams);
-			if (!pEntity)
-			{
-				_AttOk = false;
-				return false;
-			}
-			pEntity->LoadGeometry(0, "Objects/default/primitive_pyramid.cgf");
-			physParams.type = PE_RIGID;
-			physParams.mass = 70;
-			pEntity->Physicalize(physParams);
-			if (_mark)
-				gEnv->pEntitySystem->RemoveEntity(_mark->GetId(), true);
-			_mark = NULL;
-			_timeS2 = gEnv->pTimer->GetCurrTime();
-			_s2 = pEntity;
-			_delayS2 = gEnv->pTimer->GetCurrTime();
-			_delay = false;
-			break;
-		case 3:
-			if (_delayS3 > 0 && gEnv->pTimer->GetCurrTime() <= _delayS3 + 2)
-				return false;
-			m_pPlayer->GetEntity()->SetPos(Vec3(m_pPlayer->GetEntity()->GetPos().x + 5 * m_pPlayer->GetViewRotation().GetColumn1().x, m_pPlayer->GetEntity()->GetPos().y + 5 * m_pPlayer->GetViewRotation().GetColumn1().y, m_pPlayer->GetEntity()->GetPos().z));
-			if (_mark)
-				gEnv->pEntitySystem->RemoveEntity(_mark->GetId(), true);
-			_mark = NULL;
-			_delayS3 = gEnv->pTimer->GetCurrTime();
-			_delay = false;
-			break;
-		case 4:
-			if (_delayS4 > 0 && gEnv->pTimer->GetCurrTime() <= _delayS4 + 3)
-				return false;
-			entitySpawnParams.pClass = gEnv->pEntitySystem->GetClassRegistry()->GetDefaultClass();
-			entitySpawnParams.sName = "Ulti";
-			entitySpawnParams.vPosition = Vec3(m_pPlayer->GetEntity()->GetPos().x + 9 * m_pPlayer->GetViewRotation().GetColumn1().x, m_pPlayer->GetEntity()->GetPos().y + 9 * m_pPlayer->GetViewRotation().GetColumn1().y, m_pPlayer->GetEntity()->GetPos().z);
-			entitySpawnParams.id = 0;
-			entitySpawnParams.vScale(0.9, 0.9, 0.9);
-			pEntity = gEnv->pEntitySystem->SpawnEntity(entitySpawnParams);
-			if (!pEntity)
-			{
-				_AttOk = false;
-				return false;
-			}
-			pEntity->LoadGeometry(0, "Objects/default/primitive_cylinder.cgf");
-			physParams.type = PE_RIGID;
-			physParams.mass = 200;
-			pEntity->Physicalize(physParams);
-			if (_mark)
-				gEnv->pEntitySystem->RemoveEntity(_mark->GetId(), true);
-			_mark = NULL;
-			_timeUlti = gEnv->pTimer->GetCurrTime();
-			_s4 = pEntity;
-			_delayS4 = gEnv->pTimer->GetCurrTime();
-			_delay = false;
-			break;
-		default:
-			return false;
-			break;
-		}
-	}
-	_AttOk = false;
-	return true;
+	return m_pPlayer->getSpell()->useSpell();
 }
 
 bool CPlayerInput::OnActionZoom(EntityId actorId, const ActionId& actionId, int activationMode, float value)
 {
-	_AttOk = false;
-	_nbSort = 0;
-	if (_mark)
-		gEnv->pEntitySystem->RemoveEntity(_mark->GetId(), true);
-	_mark = NULL;
-	return true;
+	return m_pPlayer->getSpell()->cancelSpell();
 }
 
 // BlackHole

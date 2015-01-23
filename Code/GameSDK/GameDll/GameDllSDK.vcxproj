@@ -1,5 +1,5 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-<Project DefaultTargets="Build" ToolsVersion="12.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+<Project DefaultTargets="Build" ToolsVersion="14.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ItemGroup Label="ProjectConfigurations">
     <ProjectConfiguration Include="Debug|Win32">
       <Configuration>Debug</Configuration>
@@ -94,32 +94,32 @@
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release Server Only|x64'" Label="Configuration">
     <ConfigurationType>StaticLibrary</ConfigurationType>
     <CharacterSet>MultiByte</CharacterSet>
-    <PlatformToolset>v120</PlatformToolset>
+    <PlatformToolset>v140</PlatformToolset>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Profile Server Only|x64'" Label="Configuration">
     <ConfigurationType>DynamicLibrary</ConfigurationType>
     <CharacterSet>MultiByte</CharacterSet>
-    <PlatformToolset>v120</PlatformToolset>
+    <PlatformToolset>v140</PlatformToolset>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'" Label="Configuration">
     <ConfigurationType>StaticLibrary</ConfigurationType>
     <CharacterSet>MultiByte</CharacterSet>
-    <PlatformToolset>v120</PlatformToolset>
+    <PlatformToolset>v140</PlatformToolset>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Performance|x64'" Label="Configuration">
     <ConfigurationType>DynamicLibrary</ConfigurationType>
     <CharacterSet>MultiByte</CharacterSet>
-    <PlatformToolset>v120</PlatformToolset>
+    <PlatformToolset>v140</PlatformToolset>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Profile|x64'" Label="Configuration">
     <ConfigurationType>DynamicLibrary</ConfigurationType>
     <CharacterSet>MultiByte</CharacterSet>
-    <PlatformToolset>v120</PlatformToolset>
+    <PlatformToolset>v140</PlatformToolset>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'" Label="Configuration">
     <ConfigurationType>DynamicLibrary</ConfigurationType>
     <CharacterSet>MultiByte</CharacterSet>
-    <PlatformToolset>v120</PlatformToolset>
+    <PlatformToolset>v140</PlatformToolset>
   </PropertyGroup>
   <PropertyGroup Label="Configuration" Condition="'$(Configuration)|$(Platform)'=='Profile|ORBIS'">
     <ConfigurationType>StaticLibrary</ConfigurationType>
@@ -750,6 +750,7 @@
     <ClCompile Include="RichPresence.cpp" />
     <ClCompile Include="ScriptBind_ProtectedBinds.cpp" />
     <ClCompile Include="ShotDebug.cpp" />
+    <ClCompile Include="Spell.cpp" />
     <ClCompile Include="SprintStamina.cpp" />
     <ClCompile Include="StatsAgentPipe.cpp" />
     <ClCompile Include="StatsEntityIdRegistry.cpp" />
@@ -1288,6 +1289,7 @@
     <ClInclude Include="ActorTelemetry.h" />
     <ClInclude Include="AIDemoInput.h" />
     <ClInclude Include="IntersectionAssistanceUnit.h" />
+    <ClInclude Include="ISpell.h" />
     <ClInclude Include="ItemAnimation.h" />
     <ClInclude Include="LagOMeter.h" />
     <ClInclude Include="MovementAction.h" />
@@ -1335,6 +1337,7 @@
     <ClInclude Include="RichPresence.h" />
     <ClInclude Include="ScriptBind_ProtectedBinds.h" />
     <ClInclude Include="ShotDebug.h" />
+    <ClInclude Include="Spell.h" />
     <ClInclude Include="SprintStamina.h" />
     <ClInclude Include="StatsAgentPipe.h" />
     <ClInclude Include="StatsEntityIdRegistry.h" />

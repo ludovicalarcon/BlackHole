@@ -424,7 +424,7 @@ CPlayer::CPlayer()
 {
 	m_pPlayerRotation = new CPlayerRotation(*this);
 	CRY_ASSERT( m_pPlayerRotation );
-
+	_spell = new Spell(this);
 	m_pPlayerPluginEventDistributor = new CPlayerPluginEventDistributor;
 	CRY_ASSERT( m_pPlayerPluginEventDistributor );
 
@@ -670,7 +670,7 @@ bool CPlayer::Init(IGameObject * pGameObject)
 	{
 		InitLocalPlayer();
 	}
-	
+
 	// This must come after CActor::Init as it's that function that determines whether we're a player or an AI.
 	SelectMovementHierarchy();
 
@@ -828,6 +828,7 @@ bool CPlayer::Init(IGameObject * pGameObject)
 	//	Script::CallMethod(this->GetEntity()->GetScriptTable(), "SetActorModel", this->IsClient());
 	//}
 	// BlackHole
+
 	return true;
 }
 
@@ -1254,6 +1255,7 @@ void CPlayer::ProcessEvent(SEntityEvent& event)
 		{
 			if(gEnv->IsEditor() && IsClient())
 				SupressViewBlending();
+
 			break;
 		}
 
@@ -3120,7 +3122,8 @@ int CPlayer::IsGod()
 bool CPlayer::IsThirdPerson() const
 {
 	//force thirdperson view for non-clients
-  return !m_isClient || !m_stats.isThirdPerson;	
+  //return !m_isClient || m_stats.isThirdPerson;	
+	return true;
 }
 
 void CPlayer::SpawnCorpse()
@@ -8516,8 +8519,8 @@ void CPlayer::SetupAimIKProperties()
 void CPlayer::Reset( bool toGame )
 {
 	CActor::Reset(toGame);
-	m_pPlayerInput->setMarkNull();
 
+	_spell->reset();
 	StateMachineResetMovement();
 	SelectMovementHierarchy();
 

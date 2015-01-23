@@ -14,12 +14,9 @@ History:
 #ifndef __PLAYERINPUT_H__
 #define __PLAYERINPUT_H__
 
-#pragma once
-
 #include "IActionMapManager.h"
 #include "IPlayerInput.h"
 #include "Player.h"
-
 
 struct SPlayerStats;
 
@@ -119,9 +116,6 @@ public:
 	bool CallAllCancelHandlers();
 
 	ILINE bool IsNearLookAtTarget() const { return m_isNearTheLookAtTarget; }
-	// BlackHole
-	void	setMarkNull() { _mark = NULL; }
-	// BlackHole
 private:
 	void HandleMovingDetachedCamera(const Ang3 &deltaRotation, const Vec3 &m_deltaMovement);
 	EStance FigureOutStance();
@@ -307,25 +301,6 @@ private:
 	bool m_openingVisor;
 	bool m_playerInVehicleAtFrameStart;
 
-	// BlackHole
-	bool	_AttOk;
-	bool	_delay;
-	float	_timeS1;
-	float	_timeS2;
-	float	_timeS3;
-	float	_timeUlti;
-	int		_nbSort;
-	float	_delayS1;
-	float	_delayS2;
-	float	_delayS3;
-	float	_delayS4;
-	IEntity *_mark;
-	IEntity *_s1;
-	IEntity *_s2;
-	IEntity *_s3;
-	IEntity *_s4;
-	// BlackHole
-
 	enum E_AutoPickupModeEnabled
 	{
 		EAPM_None = 0,
@@ -390,9 +365,6 @@ public:
 		eMBM_Left			= (1 << 2),
 		eMBM_Right		= (1 << 3)
 	};
-	// BlackHole
-	void	setMarkNull() {}
-	// BlackHole
 	CAIInput( CPlayer * pPlayer );
 	~CAIInput();
 

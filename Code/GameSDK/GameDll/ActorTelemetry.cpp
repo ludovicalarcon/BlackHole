@@ -572,16 +572,20 @@ void CActorTelemetry::RegisterPlayerActionFilters()
 	m_playerActionFilters.insert(actions.nextitem);
 	m_playerActionFilters.insert(actions.previtem);
 	m_playerActionFilters.insert(actions.toggle_explosive);
+// BlackHole
 	m_playerActionFilters.insert(actions.sort1);
+// BlackHole
 	m_playerActionFilters.insert(actions.toggle_grenade);
 	m_playerActionFilters.insert(actions.handgrenade);
 	m_playerActionFilters.insert(actions.xi_handgrenade);
 	m_playerActionFilters.insert(actions.debug);
 	m_playerActionFilters.insert(actions.zoom);
 	m_playerActionFilters.insert(actions.firemode);
+// BlackHole
 	m_playerActionFilters.insert(actions.sort2);
 	m_playerActionFilters.insert(actions.sort3);
 	m_playerActionFilters.insert(actions.ulti);
+// blackhole
 	m_playerActionFilters.insert(actions.binoculars);
 	m_playerActionFilters.insert(actions.objectives);
 	m_playerActionFilters.insert(actions.grenade);

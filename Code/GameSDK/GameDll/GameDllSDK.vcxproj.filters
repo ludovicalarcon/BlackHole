@@ -298,6 +298,9 @@
     <Filter Include="XboxOneLive">
       <UniqueIdentifier>{7cbc742f-f8ad-4d23-b1b3-9ce923689158}</UniqueIdentifier>
     </Filter>
+    <Filter Include="BlackHole">
+      <UniqueIdentifier>{03c60043-f334-40b0-ab89-76aaf24b33c5}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="BasicEventListener.cpp">
@@ -2019,6 +2022,9 @@
       <Filter>Multiplayer\Network</Filter>
     </ClCompile>
     <ClCompile Include="StdAfx.h" />
+    <ClCompile Include="Spell.cpp">
+      <Filter>BlackHole</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="BasicEventListener.h">
@@ -3819,6 +3825,12 @@
     </ClInclude>
     <ClInclude Include="Network\MatchMakingUtils.h">
       <Filter>Multiplayer\Network</Filter>
+    </ClInclude>
+    <ClInclude Include="Spell.h">
+      <Filter>BlackHole</Filter>
+    </ClInclude>
+    <ClInclude Include="ISpell.h">
+      <Filter>BlackHole</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
